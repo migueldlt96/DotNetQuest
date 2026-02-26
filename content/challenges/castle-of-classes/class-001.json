@@ -1,0 +1,97 @@
+{
+  "id": "class-001",
+  "realm": "castle-of-classes",
+  "title": "The Blueprint Chamber",
+  "story": "You enter the grand Castle of Classes. The royal architect greets you: \"Welcome! Here we learn to create BLUEPRINTS for objects. Create a class called 'Hero' with two public properties: 'Name' (string) and 'Health' (int).\"",
+  "type": "SpellCraft",
+  "difficulty": 6,
+  "xpReward": 175,
+  "starterCode": "// Define a class called Hero with Name and Health properties\n\nHero hero = new Hero();\nhero.Name = \"Aria\";\nhero.Health = 100;",
+  "solution": "class Hero { public string Name { get; set; } public int Health { get; set; } }",
+  "testCases": [
+    {
+      "description": "hero.Name should equal \"Aria\"",
+      "assertion": "hero.Name == \"Aria\""
+    },
+    {
+      "description": "hero.Health should equal 100",
+      "assertion": "hero.Health == 100"
+    }
+  ],
+  "hints": [
+    "Classes are defined: class ClassName { }",
+    "Properties use: public type Name { get; set; }",
+    "class Hero { public string Name { get; set; } public int Health { get; set; } }"
+  ],
+  "concepts": ["classes", "properties", "objects"],
+  "readingMaterial": [
+    {
+      "title": "Classes",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes",
+      "description": "Introduction to classes in C#"
+    },
+    {
+      "title": "Properties",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties",
+      "description": "Using properties in C#"
+    }
+  ],
+  "tutorial": {
+    "title": "Classes: Blueprints for Objects",
+    "steps": [
+      {
+        "explanation": "A CLASS is like a blueprint or template. Just like an architect's blueprint describes how to build a house, a class describes how to create an object.\n\nYou define a class ONCE, then create many objects from it!",
+        "tip": "Think: Class = Cookie Cutter, Object = Cookie. One cutter, many cookies!"
+      },
+      {
+        "explanation": "The basic syntax for a class:\n\nclass ClassName\n{\n    // properties and methods go here\n}\n\nClass names should be nouns and use PascalCase (each word capitalized).",
+        "codeExample": "class Hero\n{\n    // Hero's data and behaviors go here\n}",
+        "tip": "Good class names: Hero, Player, Enemy, Weapon. Bad names: DoStuff, MyClass, x."
+      },
+      {
+        "explanation": "PROPERTIES store data about an object. Each hero has a name and health - those are properties!\n\nThe syntax:\npublic type PropertyName { get; set; }",
+        "codeExample": "class Hero\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n}",
+        "tip": "{ get; set; } is shorthand for 'this property can be read and written'. We'll learn more later!"
+      },
+      {
+        "explanation": "To CREATE an object from a class, use the 'new' keyword:\n\nHero myHero = new Hero();\n\nThis creates a new Hero object and stores it in the variable 'myHero'.",
+        "codeExample": "Hero hero = new Hero();  // Create a new Hero\nhero.Name = \"Aria\";      // Set the Name property\nhero.Health = 100;       // Set the Health property",
+        "tip": "The 'new' keyword calls the class's constructor and creates a fresh object in memory."
+      },
+      {
+        "explanation": "Access properties using DOT NOTATION:\n\nobject.PropertyName\n\nYou can read from or write to properties this way.",
+        "codeExample": "hero.Name = \"Aria\";           // Write to property\nstring heroName = hero.Name;  // Read from property\n\nConsole.WriteLine(hero.Name); // Prints: Aria",
+        "tip": "The dot (.) means 'look inside this object and access this member'."
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Classes are blueprints for creating objects. Let's explore how they work!",
+    "examples": [
+      {
+        "title": "A Simple Class",
+        "explanation": "Here's a basic class with two properties. We create an object from it and set its properties.\n\nNotice: the class is the template, the object is the actual thing!",
+        "code": "class Pet\n{\n    public string Name { get; set; }\n    public string Species { get; set; }\n}\n\nPet myPet = new Pet();\nmyPet.Name = \"Whiskers\";\nmyPet.Species = \"Cat\";\n\nConsole.WriteLine(myPet.Name + \" is a \" + myPet.Species);",
+        "expectedOutput": "Whiskers is a Cat"
+      },
+      {
+        "title": "Multiple Objects from One Class",
+        "explanation": "One class can create MANY objects. Each object has its own separate data.\n\nChanging one hero doesn't affect the others!",
+        "code": "class Hero\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n}\n\nHero hero1 = new Hero();\nhero1.Name = \"Aria\";\nhero1.Health = 100;\n\nHero hero2 = new Hero();\nhero2.Name = \"Bran\";\nhero2.Health = 85;\n\nConsole.WriteLine(hero1.Name + \": \" + hero1.Health + \" HP\");\nConsole.WriteLine(hero2.Name + \": \" + hero2.Health + \" HP\");",
+        "expectedOutput": "Aria: 100 HP\nBran: 85 HP"
+      },
+      {
+        "title": "Different Property Types",
+        "explanation": "Properties can be any type: string, int, bool, double, or even other classes!\n\nHere's a more complex example.",
+        "code": "class Character\n{\n    public string Name { get; set; }\n    public int Level { get; set; }\n    public double Gold { get; set; }\n    public bool IsAlive { get; set; }\n}\n\nCharacter player = new Character();\nplayer.Name = \"Hero\";\nplayer.Level = 5;\nplayer.Gold = 150.50;\nplayer.IsAlive = true;\n\nConsole.WriteLine(player.Name + \" (Level \" + player.Level + \")\");\nConsole.WriteLine(\"Gold: \" + player.Gold);\nConsole.WriteLine(\"Alive: \" + player.IsAlive);",
+        "expectedOutput": "Hero (Level 5)\nGold: 150.5\nAlive: True"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create a Hero class with:\n- Name (string)\n- Health (int)\n\nThen create a hero, set Name to \"Aria\" and Health to 100.",
+        "code": "// Define your Hero class here\n\nHero hero = new Hero();\nhero.Name = \"Aria\";\nhero.Health = 100;\n\nConsole.WriteLine(hero.Name + \" has \" + hero.Health + \" health.\");",
+        "expectedOutput": "Aria has 100 health."
+      }
+    ]
+  }
+}

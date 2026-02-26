@@ -34,6 +34,12 @@ public class ChallengeLoader
         "challenges/mountains-of-methods/method-003.json",
         "challenges/mountains-of-methods/method-004.json",
         "challenges/mountains-of-methods/method-005.json",
+        // Castle of Classes
+        "challenges/castle-of-classes/class-001.json",
+        "challenges/castle-of-classes/class-002.json",
+        "challenges/castle-of-classes/class-003.json",
+        "challenges/castle-of-classes/class-004.json",
+        "challenges/castle-of-classes/class-005.json",
     };
 
     public ChallengeLoader(ChallengeService challengeService)

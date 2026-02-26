@@ -1,0 +1,97 @@
+{
+  "id": "class-005",
+  "realm": "castle-of-classes",
+  "title": "The Throne of Inheritance",
+  "story": "The King himself awaits at the throne: \"The ultimate power of OOP - INHERITANCE! Create a base 'Character' class, then a 'Warrior' class that inherits from it and adds an 'Attack' method. A Warrior IS a Character!\"",
+  "type": "BossBattle",
+  "difficulty": 8,
+  "xpReward": 300,
+  "starterCode": "// Create Character class with Name, Health, and TakeDamage\n// Create Warrior class that inherits from Character and adds Attack method\n\nWarrior warrior = new Warrior(\"Aria\", 100);\nCharacter enemy = new Character(\"Goblin\", 50);\nwarrior.Attack(enemy);",
+  "solution": "class Character { public string Name { get; set; } public int Health { get; set; } public Character(string name, int health) { Name = name; Health = health; } public void TakeDamage(int damage) { Health -= damage; } } class Warrior : Character { public Warrior(string name, int health) : base(name, health) { } public void Attack(Character target) { target.TakeDamage(10); } }",
+  "testCases": [
+    {
+      "description": "Enemy health should be 40 after attack",
+      "assertion": "enemy.Health == 40"
+    },
+    {
+      "description": "Warrior should still have 100 health",
+      "assertion": "warrior.Health == 100"
+    }
+  ],
+  "hints": [
+    "Use : BaseClass to inherit",
+    "Call base constructor with : base(params)",
+    "Warrior inherits Name, Health, and TakeDamage from Character"
+  ],
+  "concepts": ["inheritance", "base-class", "derived-class"],
+  "readingMaterial": [
+    {
+      "title": "Inheritance",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance",
+      "description": "Understanding inheritance in C#"
+    },
+    {
+      "title": "Base Classes",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/inheritance",
+      "description": "Working with base and derived classes"
+    }
+  ],
+  "tutorial": {
+    "title": "Inheritance: Building on What Exists",
+    "steps": [
+      {
+        "explanation": "INHERITANCE lets you create a new class based on an existing one. The new class INHERITS all properties and methods from the parent!\n\nThink of it like: A Warrior IS A Character (with extra abilities).",
+        "tip": "Inheritance creates an 'is-a' relationship. A Dog IS an Animal. A Warrior IS a Character."
+      },
+      {
+        "explanation": "The syntax for inheritance:\n\nclass DerivedClass : BaseClass\n{\n    // Additional stuff here\n}\n\nThe : means 'inherits from'.",
+        "codeExample": "class Character  // Base class\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n}\n\nclass Warrior : Character  // Inherits from Character\n{\n    // Warrior automatically has Name and Health!\n}",
+        "tip": "Base class = parent. Derived class = child. The child gets everything the parent has."
+      },
+      {
+        "explanation": "When the base class has a constructor, the derived class must call it using : base()\n\nThis passes values up to the parent's constructor.",
+        "codeExample": "class Character\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n    \n    public Character(string name, int health)\n    {\n        Name = name;\n        Health = health;\n    }\n}\n\nclass Warrior : Character\n{\n    public Warrior(string name, int health) : base(name, health)\n    {\n        // base(name, health) calls Character's constructor\n    }\n}",
+        "tip": ": base(...) must come before the { } body. It calls the parent constructor first."
+      },
+      {
+        "explanation": "The derived class can ADD new methods and properties that the base class doesn't have:\n\nclass Warrior : Character\n{\n    public void Attack(Character target)\n    {\n        target.TakeDamage(10);  // Warrior-specific ability!\n    }\n}\n\nNow Warriors can do everything Characters can, PLUS attack!",
+        "codeExample": "class Warrior : Character\n{\n    public Warrior(string name, int health) : base(name, health) { }\n    \n    public void Attack(Character target)\n    {\n        target.TakeDamage(10);\n    }\n}",
+        "tip": "The derived class is the base class + more. It has everything the parent has, plus its own additions."
+      },
+      {
+        "explanation": "Putting it all together:\n\n1. Character is the base class (Name, Health, TakeDamage)\n2. Warrior inherits from Character (gets Name, Health, TakeDamage)\n3. Warrior adds Attack method\n4. A Warrior can be used anywhere a Character is expected!",
+        "codeExample": "Warrior w = new Warrior(\"Aria\", 100);\n\n// Warrior has inherited properties/methods:\nConsole.WriteLine(w.Name);     // From Character\nConsole.WriteLine(w.Health);   // From Character\nw.TakeDamage(10);              // From Character\n\n// Plus its own:\nw.Attack(someEnemy);           // Warrior-specific",
+        "tip": "A Warrior IS a Character, so it can do everything a Character can do - and more!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Inheritance lets you build new classes on top of existing ones, reusing code and creating hierarchies!",
+    "examples": [
+      {
+        "title": "Basic Inheritance",
+        "explanation": "Animal is the base class. Dog inherits from Animal and gets all its properties!\n\nDog also adds its own Bark method.",
+        "code": "class Animal\n{\n    public string Name { get; set; }\n    \n    public Animal(string name)\n    {\n        Name = name;\n    }\n    \n    public void Eat()\n    {\n        Console.WriteLine(Name + \" is eating.\");\n    }\n}\n\nclass Dog : Animal\n{\n    public Dog(string name) : base(name) { }\n    \n    public void Bark()\n    {\n        Console.WriteLine(Name + \" says: Woof!\");\n    }\n}\n\nDog dog = new Dog(\"Buddy\");\ndog.Eat();   // Inherited from Animal\ndog.Bark();  // Dog's own method",
+        "expectedOutput": "Buddy is eating.\nBuddy says: Woof!"
+      },
+      {
+        "title": "Multiple Derived Classes",
+        "explanation": "One base class can have many derived classes! Each inherits the same base but adds different features.",
+        "code": "class Vehicle\n{\n    public int Speed { get; set; }\n    \n    public Vehicle(int speed)\n    {\n        Speed = speed;\n    }\n}\n\nclass Car : Vehicle\n{\n    public Car(int speed) : base(speed) { }\n    \n    public void Honk() => Console.WriteLine(\"Beep beep!\");\n}\n\nclass Bicycle : Vehicle\n{\n    public Bicycle(int speed) : base(speed) { }\n    \n    public void RingBell() => Console.WriteLine(\"Ring ring!\");\n}\n\nCar car = new Car(60);\nBicycle bike = new Bicycle(15);\n\nConsole.WriteLine(\"Car speed: \" + car.Speed);\ncar.Honk();\nConsole.WriteLine(\"Bike speed: \" + bike.Speed);\nbike.RingBell();",
+        "expectedOutput": "Car speed: 60\nBeep beep!\nBike speed: 15\nRing ring!"
+      },
+      {
+        "title": "Character and Warrior",
+        "explanation": "Here's the challenge setup! Character has basic properties and TakeDamage.\n\nWarrior inherits everything and adds Attack!",
+        "code": "class Character\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n    \n    public Character(string name, int health)\n    {\n        Name = name;\n        Health = health;\n    }\n    \n    public void TakeDamage(int damage)\n    {\n        Health -= damage;\n        Console.WriteLine(Name + \" takes \" + damage + \" damage! HP: \" + Health);\n    }\n}\n\nclass Warrior : Character\n{\n    public Warrior(string name, int health) : base(name, health) { }\n    \n    public void Attack(Character target)\n    {\n        Console.WriteLine(Name + \" attacks \" + target.Name + \"!\");\n        target.TakeDamage(10);\n    }\n}\n\nWarrior hero = new Warrior(\"Aria\", 100);\nCharacter goblin = new Character(\"Goblin\", 30);\n\nhero.Attack(goblin);",
+        "expectedOutput": "Aria attacks Goblin!\nGoblin takes 10 damage! HP: 20"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create:\n1. Character class with Name, Health, constructor, and TakeDamage\n2. Warrior class inheriting from Character with Attack method\n\nAttack should deal 10 damage to the target!",
+        "code": "// Define Character and Warrior classes here\n\nWarrior warrior = new Warrior(\"Aria\", 100);\nCharacter enemy = new Character(\"Goblin\", 50);\nwarrior.Attack(enemy);\nConsole.WriteLine(enemy.Name + \" has \" + enemy.Health + \" HP left.\");",
+        "expectedOutput": "Goblin has 40 HP left."
+      }
+    ]
+  }
+}

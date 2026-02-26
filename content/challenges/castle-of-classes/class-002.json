@@ -1,0 +1,97 @@
+{
+  "id": "class-002",
+  "realm": "castle-of-classes",
+  "title": "The Constructor's Forge",
+  "story": "The castle blacksmith shows you his forge: \"Every great object starts with proper initialization! Create a Hero class with a CONSTRUCTOR that takes 'name' and 'health' parameters and assigns them to properties.\"",
+  "type": "SpellCraft",
+  "difficulty": 6,
+  "xpReward": 175,
+  "starterCode": "// Create a Hero class with a constructor that takes name and health\n\nHero hero = new Hero(\"Aria\", 100);",
+  "solution": "class Hero { public string Name { get; set; } public int Health { get; set; } public Hero(string name, int health) { Name = name; Health = health; } }",
+  "testCases": [
+    {
+      "description": "hero.Name should equal \"Aria\"",
+      "assertion": "hero.Name == \"Aria\""
+    },
+    {
+      "description": "hero.Health should equal 100",
+      "assertion": "hero.Health == 100"
+    }
+  ],
+  "hints": [
+    "A constructor has the same name as the class",
+    "Constructors don't have a return type",
+    "public Hero(string name, int health) { Name = name; Health = health; }"
+  ],
+  "concepts": ["constructors", "initialization", "parameters"],
+  "readingMaterial": [
+    {
+      "title": "Constructors",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/constructors",
+      "description": "Using constructors to initialize objects"
+    },
+    {
+      "title": "Instance Constructors",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/instance-constructors",
+      "description": "Creating instance constructors"
+    }
+  ],
+  "tutorial": {
+    "title": "Constructors: Building Objects Right",
+    "steps": [
+      {
+        "explanation": "A CONSTRUCTOR is a special method that runs when you create a new object. It's your chance to set up the object properly!\n\nInstead of:\nHero h = new Hero();\nh.Name = \"Aria\";\nh.Health = 100;\n\nYou can do:\nHero h = new Hero(\"Aria\", 100);",
+        "tip": "Constructors ensure objects are created in a valid state - no more forgetting to set important values!"
+      },
+      {
+        "explanation": "Constructor syntax:\n\n1. Same NAME as the class\n2. NO return type (not even void!)\n3. Can have parameters\n4. Called automatically when you use 'new'",
+        "codeExample": "class Hero\n{\n    public string Name { get; set; }\n    \n    public Hero(string name)  // Constructor\n    {\n        Name = name;\n    }\n}",
+        "tip": "The constructor name MUST match the class name exactly, including capitalization."
+      },
+      {
+        "explanation": "Inside the constructor, assign parameter values to properties:\n\npublic Hero(string name, int health)\n{\n    Name = name;     // Assign parameter to property\n    Health = health;\n}",
+        "codeExample": "class Hero\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n    \n    public Hero(string name, int health)\n    {\n        Name = name;\n        Health = health;\n    }\n}",
+        "tip": "Notice: 'name' (lowercase) is the parameter, 'Name' (uppercase) is the property."
+      },
+      {
+        "explanation": "When you call new Hero(\"Aria\", 100):\n\n1. C# creates a new Hero object in memory\n2. Runs the constructor with name=\"Aria\", health=100\n3. Constructor sets Name and Health\n4. Returns the fully-initialized object",
+        "codeExample": "Hero hero = new Hero(\"Aria\", 100);\n\n// hero.Name is already \"Aria\"\n// hero.Health is already 100\n// No extra setup needed!",
+        "tip": "The constructor runs automatically - you don't call it separately."
+      },
+      {
+        "explanation": "Putting it all together:\n\nclass Hero\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n    \n    public Hero(string name, int health)\n    {\n        Name = name;\n        Health = health;\n    }\n}",
+        "codeExample": "class Hero\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n    \n    public Hero(string name, int health)\n    {\n        Name = name;\n        Health = health;\n    }\n}",
+        "tip": "Now Hero REQUIRES name and health - you can't create a hero without them!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Constructors initialize objects when they're created. Let's see how they work!",
+    "examples": [
+      {
+        "title": "Basic Constructor",
+        "explanation": "This constructor takes one parameter and assigns it to a property.\n\nNow we can create a Pet with a name in one line!",
+        "code": "class Pet\n{\n    public string Name { get; set; }\n    \n    public Pet(string name)\n    {\n        Name = name;\n        Console.WriteLine(\"A new pet named \" + name + \" was created!\");\n    }\n}\n\nPet cat = new Pet(\"Whiskers\");\nPet dog = new Pet(\"Buddy\");",
+        "expectedOutput": "A new pet named Whiskers was created!\nA new pet named Buddy was created!"
+      },
+      {
+        "title": "Multiple Parameters",
+        "explanation": "Constructors can take multiple parameters - just like methods!\n\nThis makes creating fully-initialized objects easy.",
+        "code": "class Rectangle\n{\n    public int Width { get; set; }\n    public int Height { get; set; }\n    \n    public Rectangle(int width, int height)\n    {\n        Width = width;\n        Height = height;\n    }\n}\n\nRectangle r1 = new Rectangle(10, 5);\nRectangle r2 = new Rectangle(3, 7);\n\nConsole.WriteLine(\"R1: \" + r1.Width + \"x\" + r1.Height);\nConsole.WriteLine(\"R2: \" + r2.Width + \"x\" + r2.Height);",
+        "expectedOutput": "R1: 10x5\nR2: 3x7"
+      },
+      {
+        "title": "Constructor with Validation",
+        "explanation": "Constructors can include logic! Here we ensure health is never negative.\n\nThis protects our object from invalid states.",
+        "code": "class Hero\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n    \n    public Hero(string name, int health)\n    {\n        Name = name;\n        // Ensure health is at least 0\n        if (health < 0)\n            Health = 0;\n        else\n            Health = health;\n    }\n}\n\nHero h1 = new Hero(\"Aria\", 100);\nHero h2 = new Hero(\"Ghost\", -50);  // Invalid health!\n\nConsole.WriteLine(h1.Name + \": \" + h1.Health);\nConsole.WriteLine(h2.Name + \": \" + h2.Health);",
+        "expectedOutput": "Aria: 100\nGhost: 0"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create a Hero class with:\n- Name and Health properties\n- A constructor that takes (string name, int health) and assigns them\n\nTest with: new Hero(\"Aria\", 100)",
+        "code": "// Define your Hero class with constructor here\n\nHero hero = new Hero(\"Aria\", 100);\nConsole.WriteLine(hero.Name + \" has \" + hero.Health + \" HP\");",
+        "expectedOutput": "Aria has 100 HP"
+      }
+    ]
+  }
+}

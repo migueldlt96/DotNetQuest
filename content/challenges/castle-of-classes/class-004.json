@@ -1,0 +1,93 @@
+{
+  "id": "class-004",
+  "realm": "castle-of-classes",
+  "title": "The Vault of Secrets",
+  "story": "The castle treasurer guards his vault: \"Not all data should be exposed! Create a BankAccount class with a PRIVATE '_balance' field, and public methods Deposit, Withdraw, and GetBalance to safely access it.\"",
+  "type": "SpellCraft",
+  "difficulty": 7,
+  "xpReward": 200,
+  "starterCode": "// Create BankAccount with private _balance field\n// Add Deposit(int), Withdraw(int), and GetBalance() methods\n\nBankAccount account = new BankAccount(100);\naccount.Deposit(50);\naccount.Withdraw(30);",
+  "solution": "class BankAccount { private int _balance; public BankAccount(int initial) { _balance = initial; } public void Deposit(int amount) { if (amount > 0) _balance += amount; } public void Withdraw(int amount) { if (amount > 0 && amount <= _balance) _balance -= amount; } public int GetBalance() { return _balance; } }",
+  "testCases": [
+    {
+      "description": "Balance should be 120 (100 + 50 - 30)",
+      "assertion": "account.GetBalance() == 120"
+    }
+  ],
+  "hints": [
+    "Use 'private' keyword to hide the field",
+    "Private fields conventionally start with underscore: _balance",
+    "Provide public methods to safely access private data"
+  ],
+  "concepts": ["encapsulation", "private-fields", "access-modifiers"],
+  "readingMaterial": [
+    {
+      "title": "Access Modifiers",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers",
+      "description": "Public, private, and other access levels"
+    },
+    {
+      "title": "Encapsulation",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/",
+      "description": "Object-oriented programming principles"
+    }
+  ],
+  "tutorial": {
+    "title": "Encapsulation: Protecting Data",
+    "steps": [
+      {
+        "explanation": "ENCAPSULATION means hiding internal details and controlling how data is accessed.\n\nImagine a bank account: you can't just reach in and change the balance. You must use proper channels (deposit/withdraw)!",
+        "tip": "Encapsulation prevents bugs by controlling how data can be modified."
+      },
+      {
+        "explanation": "ACCESS MODIFIERS control visibility:\n\n- public: Anyone can access\n- private: Only code inside this class can access\n\nBy default, class members are private.",
+        "codeExample": "class BankAccount\n{\n    private int _balance;  // Only this class can see _balance\n    public int Id;         // Anyone can see Id\n}",
+        "tip": "Private members are like secrets - only the class itself knows them."
+      },
+      {
+        "explanation": "Private FIELDS store data that shouldn't be directly accessible. Convention: prefix with underscore (_).\n\nprivate int _balance;\n\nNow no one can write: account._balance = 1000000; // ERROR!",
+        "codeExample": "class BankAccount\n{\n    private int _balance;  // Can't be accessed from outside!\n    \n    public BankAccount(int initial)\n    {\n        _balance = initial;  // But WE can access it internally\n    }\n}",
+        "tip": "The underscore is a naming convention that says 'this is a private field'."
+      },
+      {
+        "explanation": "Provide PUBLIC METHODS to safely interact with private data.\n\nThese methods can include VALIDATION:\n- Don't deposit negative amounts\n- Don't withdraw more than balance",
+        "codeExample": "public void Deposit(int amount)\n{\n    if (amount > 0)      // Validation!\n        _balance += amount;\n}\n\npublic void Withdraw(int amount)\n{\n    if (amount > 0 && amount <= _balance)  // Validation!\n        _balance -= amount;\n}",
+        "tip": "By controlling access, we prevent invalid operations like negative balances."
+      },
+      {
+        "explanation": "To READ private data, provide a 'getter' method:\n\npublic int GetBalance()\n{\n    return _balance;\n}\n\nNow outsiders can SEE the balance but can't directly CHANGE it.",
+        "codeExample": "class BankAccount\n{\n    private int _balance;\n    \n    public int GetBalance()\n    {\n        return _balance;  // Read-only access\n    }\n}",
+        "tip": "This is the classic getter pattern. C# properties ({ get; set; }) are a shortcut for this!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Encapsulation protects your data by controlling how it can be accessed and modified.",
+    "examples": [
+      {
+        "title": "Public vs Private",
+        "explanation": "Public members can be accessed from anywhere. Private members can only be accessed inside the class.\n\nTry uncommenting the error line to see what happens!",
+        "code": "class Secret\n{\n    public string PublicMessage = \"Anyone can see this!\";\n    private string _secretMessage = \"Shhh, it's secret!\";\n    \n    public string RevealSecret()\n    {\n        return _secretMessage;  // OK - we're inside the class\n    }\n}\n\nSecret s = new Secret();\nConsole.WriteLine(s.PublicMessage);   // OK\nConsole.WriteLine(s.RevealSecret());  // OK - using public method\n// Console.WriteLine(s._secretMessage); // ERROR - can't access private!",
+        "expectedOutput": "Anyone can see this!\nShhh, it's secret!"
+      },
+      {
+        "title": "Validation in Methods",
+        "explanation": "When we control access through methods, we can validate input!\n\nThis Counter refuses to decrement below zero.",
+        "code": "class SafeCounter\n{\n    private int _count;\n    \n    public SafeCounter()\n    {\n        _count = 0;\n    }\n    \n    public void Increment()\n    {\n        _count++;\n    }\n    \n    public void Decrement()\n    {\n        if (_count > 0)  // Don't go below zero!\n            _count--;\n    }\n    \n    public int GetCount() => _count;\n}\n\nSafeCounter c = new SafeCounter();\nc.Increment();\nc.Increment();\nConsole.WriteLine(\"After 2 increments: \" + c.GetCount());\nc.Decrement();\nc.Decrement();\nc.Decrement();  // Tries to go negative - ignored!\nConsole.WriteLine(\"After 3 decrements: \" + c.GetCount());",
+        "expectedOutput": "After 2 increments: 2\nAfter 3 decrements: 0"
+      },
+      {
+        "title": "Complete BankAccount",
+        "explanation": "Here's a full BankAccount with encapsulation.\n\nNotice how Withdraw prevents overdraft!",
+        "code": "class BankAccount\n{\n    private int _balance;\n    \n    public BankAccount(int initial)\n    {\n        _balance = initial;\n    }\n    \n    public void Deposit(int amount)\n    {\n        if (amount > 0)\n            _balance += amount;\n    }\n    \n    public void Withdraw(int amount)\n    {\n        if (amount > 0 && amount <= _balance)\n            _balance -= amount;\n    }\n    \n    public int GetBalance() => _balance;\n}\n\nBankAccount acc = new BankAccount(100);\nConsole.WriteLine(\"Initial: $\" + acc.GetBalance());\nacc.Deposit(50);\nConsole.WriteLine(\"After deposit: $\" + acc.GetBalance());\nacc.Withdraw(200);  // Rejected - not enough!\nConsole.WriteLine(\"After failed withdraw: $\" + acc.GetBalance());",
+        "expectedOutput": "Initial: $100\nAfter deposit: $150\nAfter failed withdraw: $150"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create a BankAccount class with:\n- private _balance field\n- Constructor taking initial balance\n- Deposit, Withdraw, GetBalance methods",
+        "code": "// Define your BankAccount class here\n\nBankAccount account = new BankAccount(100);\naccount.Deposit(50);\naccount.Withdraw(30);\nConsole.WriteLine(\"Balance: $\" + account.GetBalance());",
+        "expectedOutput": "Balance: $120"
+      }
+    ]
+  }
+}

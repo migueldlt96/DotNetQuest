@@ -1,0 +1,93 @@
+{
+  "id": "class-003",
+  "realm": "castle-of-classes",
+  "title": "The Method Hall",
+  "story": "The castle wizard demonstrates: \"Objects don't just hold data - they can DO things! Add a method called 'TakeDamage' to your Hero class that subtracts damage from Health.\"",
+  "type": "SpellCraft",
+  "difficulty": 6,
+  "xpReward": 175,
+  "starterCode": "// Create Hero class with Name, Health properties, constructor,\n// and a TakeDamage(int damage) method that reduces Health\n\nHero hero = new Hero(\"Aria\", 100);\nhero.TakeDamage(25);",
+  "solution": "class Hero { public string Name { get; set; } public int Health { get; set; } public Hero(string name, int health) { Name = name; Health = health; } public void TakeDamage(int damage) { Health -= damage; } }",
+  "testCases": [
+    {
+      "description": "hero.Health should equal 75 after taking 25 damage",
+      "assertion": "hero.Health == 75"
+    }
+  ],
+  "hints": [
+    "Methods in classes work just like regular methods",
+    "Use 'void' return type if the method doesn't return anything",
+    "Access properties directly: Health -= damage;"
+  ],
+  "concepts": ["methods", "instance-methods", "behavior"],
+  "readingMaterial": [
+    {
+      "title": "Methods",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods",
+      "description": "Defining methods in classes"
+    },
+    {
+      "title": "Instance Methods",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/classes",
+      "description": "Understanding instance methods"
+    }
+  ],
+  "tutorial": {
+    "title": "Methods: Giving Objects Behavior",
+    "steps": [
+      {
+        "explanation": "So far our classes have PROPERTIES (data). But objects can also have METHODS (behaviors)!\n\nA Hero doesn't just HAVE health - they can TAKE DAMAGE, HEAL, ATTACK, etc.",
+        "tip": "Properties = what an object HAS. Methods = what an object can DO."
+      },
+      {
+        "explanation": "Methods inside classes work just like regular methods, but they can access the object's properties directly!\n\npublic void TakeDamage(int damage)\n{\n    Health -= damage;  // Access Health property\n}",
+        "codeExample": "class Hero\n{\n    public int Health { get; set; }\n    \n    public void TakeDamage(int damage)\n    {\n        Health -= damage;\n    }\n}",
+        "tip": "Inside a method, you can read and write any of the class's properties."
+      },
+      {
+        "explanation": "When you call hero.TakeDamage(25):\n\n1. The method runs on THAT specific hero object\n2. It accesses THAT hero's Health property\n3. Subtracts 25 from it\n\nOther hero objects are not affected!",
+        "codeExample": "Hero hero1 = new Hero(\"Aria\", 100);\nHero hero2 = new Hero(\"Bran\", 100);\n\nhero1.TakeDamage(25);  // Only hero1's health changes!\n\n// hero1.Health = 75\n// hero2.Health = 100 (unchanged)",
+        "tip": "Each object has its own data. Methods operate on their own object's data."
+      },
+      {
+        "explanation": "Methods can also RETURN values. Here's a method that checks if the hero is alive:\n\npublic bool IsAlive()\n{\n    return Health > 0;\n}",
+        "codeExample": "class Hero\n{\n    public int Health { get; set; }\n    \n    public void TakeDamage(int damage)\n    {\n        Health -= damage;\n    }\n    \n    public bool IsAlive()\n    {\n        return Health > 0;\n    }\n}",
+        "tip": "Methods can use any logic - calculations, conditionals, loops - just like regular methods."
+      },
+      {
+        "explanation": "For this challenge, create:\n\n1. Hero class with Name and Health properties\n2. Constructor taking name and health\n3. TakeDamage method that subtracts damage from Health",
+        "codeExample": "class Hero\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n    \n    public Hero(string name, int health)\n    {\n        Name = name;\n        Health = health;\n    }\n    \n    public void TakeDamage(int damage)\n    {\n        Health -= damage;\n    }\n}",
+        "tip": "TakeDamage doesn't return anything (void), it just modifies the Health property."
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Methods give objects behavior - the ability to DO things, not just store data!",
+    "examples": [
+      {
+        "title": "A Method That Modifies State",
+        "explanation": "This Counter class has a method that changes its internal Count property.\n\nEach call to Increment() adds 1 to that specific counter.",
+        "code": "class Counter\n{\n    public int Count { get; set; }\n    \n    public Counter()\n    {\n        Count = 0;\n    }\n    \n    public void Increment()\n    {\n        Count++;\n    }\n}\n\nCounter c = new Counter();\nc.Increment();\nc.Increment();\nc.Increment();\nConsole.WriteLine(\"Count: \" + c.Count);",
+        "expectedOutput": "Count: 3"
+      },
+      {
+        "title": "Methods That Return Values",
+        "explanation": "Methods can return information about the object. This Rectangle calculates its area.\n\nThe method uses the object's own Width and Height.",
+        "code": "class Rectangle\n{\n    public int Width { get; set; }\n    public int Height { get; set; }\n    \n    public Rectangle(int width, int height)\n    {\n        Width = width;\n        Height = height;\n    }\n    \n    public int GetArea()\n    {\n        return Width * Height;\n    }\n}\n\nRectangle r = new Rectangle(5, 3);\nConsole.WriteLine(\"Area: \" + r.GetArea());",
+        "expectedOutput": "Area: 15"
+      },
+      {
+        "title": "Multiple Methods Working Together",
+        "explanation": "A class can have many methods that work together.\n\nThis Hero can take damage, heal, and report if alive!",
+        "code": "class Hero\n{\n    public string Name { get; set; }\n    public int Health { get; set; }\n    \n    public Hero(string name, int health)\n    {\n        Name = name;\n        Health = health;\n    }\n    \n    public void TakeDamage(int damage)\n    {\n        Health -= damage;\n        if (Health < 0) Health = 0;\n    }\n    \n    public void Heal(int amount)\n    {\n        Health += amount;\n    }\n    \n    public bool IsAlive()\n    {\n        return Health > 0;\n    }\n}\n\nHero hero = new Hero(\"Aria\", 50);\nhero.TakeDamage(30);\nConsole.WriteLine(\"After damage: \" + hero.Health + \" HP, Alive: \" + hero.IsAlive());\nhero.Heal(20);\nConsole.WriteLine(\"After heal: \" + hero.Health + \" HP\");",
+        "expectedOutput": "After damage: 20 HP, Alive: True\nAfter heal: 40 HP"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create a Hero class with:\n- Name and Health properties\n- Constructor for both\n- TakeDamage(int damage) method that subtracts from Health",
+        "code": "// Define your Hero class here\n\nHero hero = new Hero(\"Aria\", 100);\nConsole.WriteLine(\"Before: \" + hero.Health);\nhero.TakeDamage(25);\nConsole.WriteLine(\"After: \" + hero.Health);",
+        "expectedOutput": "Before: 100\nAfter: 75"
+      }
+    ]
+  }
+}
