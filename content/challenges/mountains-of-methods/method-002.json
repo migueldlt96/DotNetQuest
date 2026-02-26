@@ -31,5 +31,63 @@
       "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods#return-values",
       "description": "Getting data back from methods"
     }
-  ]
+  ],
+  "tutorial": {
+    "title": "Parameters: Giving Methods Input",
+    "steps": [
+      {
+        "explanation": "So far our methods always do the same thing. But what if we want a method that can work with DIFFERENT values?\n\nThat's where PARAMETERS come in - they're like inputs or ingredients for your spell!",
+        "tip": "Parameters make methods flexible. Instead of 'double 5', you can 'double ANY number'."
+      },
+      {
+        "explanation": "Parameters are defined inside the parentheses:\n\nreturnType MethodName(type parameterName)\n{\n    // use parameterName here\n}\n\nThe parameter acts like a variable inside the method.",
+        "codeExample": "int Double(int n)\n{\n    return n * 2;\n}",
+        "tip": "The parameter 'n' holds whatever value is passed in when the method is called."
+      },
+      {
+        "explanation": "When you CALL a method with parameters, you pass in VALUES:\n\nint result = Double(5);    // n becomes 5\nint other = Double(10);    // n becomes 10\n\nThe value you pass is called an ARGUMENT.",
+        "codeExample": "int Double(int n)\n{\n    return n * 2;\n}\n\nint a = Double(5);   // a = 10\nint b = Double(21);  // b = 42",
+        "tip": "Parameter = the variable in the method definition. Argument = the actual value you pass in."
+      },
+      {
+        "explanation": "Inside the method, use the parameter just like any variable:\n\n- Read its value\n- Use it in calculations\n- Pass it to other methods\n\nThe parameter only exists inside this method.",
+        "codeExample": "int Double(int n)\n{\n    int result = n * 2;  // use n in calculation\n    return result;\n}\n\n// Or shorter:\nint Double(int n)\n{\n    return n * 2;  // return calculation directly\n}",
+        "tip": "Both versions do the same thing. The shorter one is more common for simple methods."
+      },
+      {
+        "explanation": "For this challenge:\n\n1. Return type: int (we're returning a number)\n2. Method name: Double\n3. Parameter: int n (the number to double)\n4. Body: return n * 2",
+        "codeExample": "int Double(int n)\n{\n    return n * 2;\n}",
+        "tip": "When called with Double(21), n becomes 21, and 21 * 2 = 42!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Let's explore parameters! They let methods work with different values each time they're called.",
+    "examples": [
+      {
+        "title": "A Method with One Parameter",
+        "explanation": "This method takes a number and triples it. The parameter 'x' holds whatever number we pass in.\n\nTry changing the numbers passed to Triple()!",
+        "code": "int Triple(int x)\n{\n    return x * 3;\n}\n\nConsole.WriteLine(Triple(5));   // 5 * 3 = 15\nConsole.WriteLine(Triple(10));  // 10 * 3 = 30\nConsole.WriteLine(Triple(0));   // 0 * 3 = 0",
+        "expectedOutput": "15\n30\n0"
+      },
+      {
+        "title": "String Parameters",
+        "explanation": "Parameters can be any type - not just numbers! Here's a method that takes a string and adds excitement.\n\nTry passing different names!",
+        "code": "string MakeExciting(string text)\n{\n    return text + \"!!!\";\n}\n\nConsole.WriteLine(MakeExciting(\"Hello\"));\nConsole.WriteLine(MakeExciting(\"Victory\"));\nConsole.WriteLine(MakeExciting(\"Quest complete\"));",
+        "expectedOutput": "Hello!!!\nVictory!!!\nQuest complete!!!"
+      },
+      {
+        "title": "Using Parameters in Calculations",
+        "explanation": "Here we use the parameter in a more complex calculation.\n\nThe parameter 'age' is used to calculate birth year.",
+        "code": "int CalculateBirthYear(int age)\n{\n    int currentYear = 2026;\n    int birthYear = currentYear - age;\n    return birthYear;\n}\n\nConsole.WriteLine(\"Age 25: born in \" + CalculateBirthYear(25));\nConsole.WriteLine(\"Age 30: born in \" + CalculateBirthYear(30));",
+        "expectedOutput": "Age 25: born in 2001\nAge 30: born in 1996"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create a method called Double that:\n- Takes an int parameter named 'n'\n- Returns n multiplied by 2\n\nTest it with Double(21) - should return 42!",
+        "code": "// Define your Double method here\n\nConsole.WriteLine(Double(21));\nConsole.WriteLine(Double(5));\nConsole.WriteLine(Double(100));",
+        "expectedOutput": "42\n10\n200"
+      }
+    ]
+  }
 }

@@ -26,5 +26,63 @@
       "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/passing-parameters",
       "description": "Working with multiple parameters"
     }
-  ]
+  ],
+  "tutorial": {
+    "title": "Multiple Parameters: More Inputs!",
+    "steps": [
+      {
+        "explanation": "Methods can take MORE than one input! Just separate parameters with commas.\n\nThink of it like a spell that needs multiple ingredients to work.",
+        "tip": "Common examples: Add(a, b), Max(x, y), CreateUser(name, email)"
+      },
+      {
+        "explanation": "The syntax for multiple parameters:\n\nreturnType MethodName(type1 param1, type2 param2)\n{\n    // use both parameters here\n}\n\nEach parameter has its own type and name.",
+        "codeExample": "int Add(int a, int b)\n{\n    return a + b;\n}",
+        "tip": "Parameters are separated by commas, both in the definition AND when calling."
+      },
+      {
+        "explanation": "When CALLING a method with multiple parameters, pass values in the same order:\n\nAdd(17, 25)  // a=17, b=25\n\nThe first value goes to the first parameter, second to second, etc.",
+        "codeExample": "int Add(int a, int b)\n{\n    return a + b;\n}\n\nint sum = Add(17, 25);  // a=17, b=25, returns 42",
+        "tip": "Order matters! Add(17, 25) and Add(25, 17) give the same result for addition, but not for subtraction!"
+      },
+      {
+        "explanation": "Parameters can be different types:\n\nstring Greet(string name, int times)\n{\n    // name is a string, times is an int\n}\n\nYou can have as many parameters as you need!",
+        "codeExample": "string Repeat(string text, int times)\n{\n    string result = \"\";\n    for (int i = 0; i < times; i++)\n    {\n        result += text;\n    }\n    return result;\n}\n\n// Repeat(\"Hi\", 3) returns \"HiHiHi\"",
+        "tip": "Don't go overboard - if a method needs more than 3-4 parameters, consider refactoring."
+      },
+      {
+        "explanation": "For this challenge:\n\n1. Return type: int\n2. Method name: Add\n3. Parameters: int a, int b\n4. Body: return a + b\n\nSimple and clean!",
+        "codeExample": "int Add(int a, int b)\n{\n    return a + b;\n}",
+        "tip": "Add(17, 25) means a=17 and b=25, so 17 + 25 = 42!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Methods can take multiple inputs! Let's explore how to work with several parameters.",
+    "examples": [
+      {
+        "title": "Two Parameters",
+        "explanation": "This method takes two numbers and returns their sum. Both parameters are integers.\n\nTry different number combinations!",
+        "code": "int Add(int a, int b)\n{\n    return a + b;\n}\n\nConsole.WriteLine(Add(5, 3));    // 8\nConsole.WriteLine(Add(10, 20));  // 30\nConsole.WriteLine(Add(-5, 5));   // 0",
+        "expectedOutput": "8\n30\n0"
+      },
+      {
+        "title": "Different Parameter Types",
+        "explanation": "Parameters don't all have to be the same type. This method takes a string and a number.\n\nIt repeats the greeting the specified number of times.",
+        "code": "void SayGreeting(string greeting, int times)\n{\n    for (int i = 0; i < times; i++)\n    {\n        Console.WriteLine(greeting);\n    }\n}\n\nSayGreeting(\"Hello!\", 3);",
+        "expectedOutput": "Hello!\nHello!\nHello!"
+      },
+      {
+        "title": "Order Matters!",
+        "explanation": "With subtraction and division, the order of arguments matters!\n\nSubtract(10, 3) is NOT the same as Subtract(3, 10).",
+        "code": "int Subtract(int a, int b)\n{\n    return a - b;  // a minus b\n}\n\nConsole.WriteLine(\"10 - 3 = \" + Subtract(10, 3));\nConsole.WriteLine(\"3 - 10 = \" + Subtract(3, 10));\nConsole.WriteLine(\"5 - 5 = \" + Subtract(5, 5));",
+        "expectedOutput": "10 - 3 = 7\n3 - 10 = -7\n5 - 5 = 0"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create an Add method that:\n- Takes two int parameters: a and b\n- Returns their sum (a + b)\n\nTest with Add(17, 25) - should return 42!",
+        "code": "// Define your Add method here\n\nConsole.WriteLine(Add(17, 25));\nConsole.WriteLine(Add(100, 50));\nConsole.WriteLine(Add(-10, 10));",
+        "expectedOutput": "42\n150\n0"
+      }
+    ]
+  }
 }

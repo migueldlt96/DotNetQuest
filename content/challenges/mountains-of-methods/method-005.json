@@ -31,5 +31,68 @@
       "url": "https://learn.microsoft.com/en-us/training/modules/csharp-call-methods/",
       "description": "Learning about method calls"
     }
-  ]
+  ],
+  "tutorial": {
+    "title": "Recursion: The Method That Calls Itself",
+    "steps": [
+      {
+        "explanation": "RECURSION is when a method calls ITSELF. It sounds like magic, but it's a powerful technique!\n\nImagine looking at two mirrors facing each other - reflections of reflections. That's recursion.",
+        "tip": "Recursion is great for problems that can be broken down into smaller versions of the same problem."
+      },
+      {
+        "explanation": "Every recursive method needs TWO parts:\n\n1. BASE CASE - When to STOP (prevents infinite loops!)\n2. RECURSIVE CASE - Call yourself with a SMALLER problem\n\nWithout a base case, recursion goes forever!",
+        "codeExample": "int Countdown(int n)\n{\n    if (n <= 0)           // BASE CASE\n        return 0;\n    return Countdown(n - 1);  // RECURSIVE CASE\n}",
+        "tip": "Always write the base case FIRST. It's the most important part!"
+      },
+      {
+        "explanation": "FACTORIAL is a perfect recursion example.\n\n5! (5 factorial) = 5 × 4 × 3 × 2 × 1 = 120\n\nNotice the pattern:\n5! = 5 × 4!\n4! = 4 × 3!\n3! = 3 × 2!\n2! = 2 × 1!\n1! = 1  (base case!)",
+        "codeExample": "5! = 5 × 4! = 5 × 24 = 120\n4! = 4 × 3! = 4 × 6 = 24\n3! = 3 × 2! = 3 × 2 = 6\n2! = 2 × 1! = 2 × 1 = 2\n1! = 1 (stop here)",
+        "tip": "Each factorial is defined in terms of a SMALLER factorial. That's the recursive pattern!"
+      },
+      {
+        "explanation": "The base case for factorial:\n\nif (n <= 1) return 1;\n\nWhy? Because:\n- 1! = 1\n- 0! = 1 (by mathematical definition)\n\nWhen we hit 1 or 0, we stop and return 1.",
+        "codeExample": "int Factorial(int n)\n{\n    if (n <= 1)     // BASE CASE\n        return 1;\n    // recursive case will go here\n}",
+        "tip": "The base case is your 'exit door' from the recursion."
+      },
+      {
+        "explanation": "The recursive case:\n\nreturn n * Factorial(n - 1);\n\nThis says: 'n factorial is n times (n-1) factorial'\n\n5! = 5 * Factorial(4)\n   = 5 * 4 * Factorial(3)\n   = 5 * 4 * 3 * Factorial(2)\n   = 5 * 4 * 3 * 2 * Factorial(1)\n   = 5 * 4 * 3 * 2 * 1\n   = 120",
+        "codeExample": "int Factorial(int n)\n{\n    if (n <= 1)               // BASE CASE\n        return 1;\n    return n * Factorial(n - 1);  // RECURSIVE CASE\n}",
+        "tip": "Each call makes n smaller until we hit the base case!"
+      },
+      {
+        "explanation": "Let's trace Factorial(5):\n\nFactorial(5) = 5 * Factorial(4)\nFactorial(4) = 4 * Factorial(3)\nFactorial(3) = 3 * Factorial(2)\nFactorial(2) = 2 * Factorial(1)\nFactorial(1) = 1 (base case!)\n\nNow unwind:\n2 * 1 = 2\n3 * 2 = 6\n4 * 6 = 24\n5 * 24 = 120",
+        "codeExample": "int Factorial(int n)\n{\n    if (n <= 1) return 1;\n    return n * Factorial(n - 1);\n}",
+        "tip": "Recursion goes DOWN (calling), then UP (returning values)."
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Recursion is when a method calls itself. It's powerful but tricky - let's explore step by step!",
+    "examples": [
+      {
+        "title": "Simple Countdown",
+        "explanation": "This recursive method counts down from n to 1. Each call prints the number, then calls itself with n-1.\n\nThe base case (n <= 0) stops the recursion.",
+        "code": "void Countdown(int n)\n{\n    if (n <= 0)  // BASE CASE - stop!\n    {\n        Console.WriteLine(\"Blast off!\");\n        return;\n    }\n    Console.WriteLine(n);\n    Countdown(n - 1);  // RECURSIVE CASE\n}\n\nCountdown(5);",
+        "expectedOutput": "5\n4\n3\n2\n1\nBlast off!"
+      },
+      {
+        "title": "Sum of Numbers",
+        "explanation": "This recursively adds numbers from 1 to n.\n\nSum(5) = 5 + Sum(4) = 5 + 4 + Sum(3) = ... = 5+4+3+2+1 = 15",
+        "code": "int Sum(int n)\n{\n    if (n <= 1) return n;  // BASE CASE\n    return n + Sum(n - 1);  // RECURSIVE CASE\n}\n\nConsole.WriteLine(\"Sum 1-5: \" + Sum(5));\nConsole.WriteLine(\"Sum 1-10: \" + Sum(10));",
+        "expectedOutput": "Sum 1-5: 15\nSum 1-10: 55"
+      },
+      {
+        "title": "Tracing Factorial",
+        "explanation": "Let's trace through Factorial(4) step by step.\n\nWatch how each call waits for the next to return!",
+        "code": "int Factorial(int n)\n{\n    Console.WriteLine(\"Calculating Factorial(\" + n + \")\");\n    \n    if (n <= 1)\n    {\n        Console.WriteLine(\"Base case! Returning 1\");\n        return 1;\n    }\n    \n    int result = n * Factorial(n - 1);\n    Console.WriteLine(\"Factorial(\" + n + \") = \" + result);\n    return result;\n}\n\nint answer = Factorial(4);\nConsole.WriteLine(\"Final answer: \" + answer);",
+        "expectedOutput": "Calculating Factorial(4)\nCalculating Factorial(3)\nCalculating Factorial(2)\nCalculating Factorial(1)\nBase case! Returning 1\nFactorial(2) = 2\nFactorial(3) = 6\nFactorial(4) = 24\nFinal answer: 24"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create a Factorial method that:\n- Base case: if n <= 1, return 1\n- Recursive case: return n * Factorial(n - 1)\n\nTest with Factorial(5) - should return 120!",
+        "code": "// Define your Factorial method here\n// Remember: base case FIRST!\n\nConsole.WriteLine(\"5! = \" + Factorial(5));\nConsole.WriteLine(\"3! = \" + Factorial(3));\nConsole.WriteLine(\"0! = \" + Factorial(0));",
+        "expectedOutput": "5! = 120\n3! = 6\n0! = 1"
+      }
+    ]
+  }
 }

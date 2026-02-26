@@ -31,5 +31,65 @@
       "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/local-functions",
       "description": "Methods inside methods"
     }
-  ]
+  ],
+  "tutorial": {
+    "title": "Methods: Reusable Code Spells",
+    "steps": [
+      {
+        "explanation": "A METHOD is a named block of code that performs a specific task. Think of it like a spell you can cast over and over - write it once, use it many times!\n\nInstead of copying the same code everywhere, you put it in a method and just call the method's name.",
+        "tip": "Methods help you avoid repeating yourself. If you find yourself copying code, it probably belongs in a method!"
+      },
+      {
+        "explanation": "Every method has these parts:\n\n1. RETURN TYPE - What kind of value does it give back? (string, int, void, etc.)\n2. NAME - What do you call it?\n3. PARENTHESES - For parameters (inputs) - empty () if none\n4. BODY - The code inside { }",
+        "codeExample": "returnType MethodName()\n{\n    // code here\n}",
+        "tip": "Method names should describe what the method DOES, like GetGreeting, CalculateTotal, or SendMessage."
+      },
+      {
+        "explanation": "The RETURN TYPE tells C# what kind of value the method produces.\n\n- string = returns text\n- int = returns a whole number\n- bool = returns true/false\n- void = returns nothing (just does something)",
+        "codeExample": "string GetName() { ... }    // returns text\nint GetAge() { ... }        // returns a number\nbool IsValid() { ... }      // returns true/false\nvoid PrintMessage() { ... } // returns nothing",
+        "tip": "If your method gives back a value, use that type. If it just DOES something without giving back a value, use 'void'."
+      },
+      {
+        "explanation": "The RETURN keyword sends a value back to whoever called the method.\n\nWhen C# hits 'return', it immediately exits the method and gives back that value.",
+        "codeExample": "string GetGreeting()\n{\n    return \"Hello!\";\n}",
+        "codeOutput": "When you call GetGreeting(), you get back \"Hello!\"",
+        "tip": "The value after 'return' must match the return type. A string method must return a string!"
+      },
+      {
+        "explanation": "To CALL (use) a method, write its name followed by parentheses:\n\nstring message = GetGreeting();\n\nThis runs the method and stores its return value in 'message'.",
+        "codeExample": "string GetGreeting()\n{\n    return \"Hello, Adventurer!\";\n}\n\nstring result = GetGreeting();\nConsole.WriteLine(result);",
+        "codeOutput": "Hello, Adventurer!",
+        "tip": "You can call a method as many times as you want - that's the power of reusable code!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Let's explore methods! These are like reusable spells - write once, use anywhere.",
+    "examples": [
+      {
+        "title": "Your First Method",
+        "explanation": "Here's the simplest possible method. It takes no inputs and always returns the same string.\n\nNotice: we DEFINE the method first, then CALL it to use it.",
+        "code": "string GetGreeting()\n{\n    return \"Hello, World!\";\n}\n\nstring message = GetGreeting();\nConsole.WriteLine(message);\nConsole.WriteLine(GetGreeting()); // Can call directly too!",
+        "expectedOutput": "Hello, World!\nHello, World!"
+      },
+      {
+        "title": "Methods Can Do Work",
+        "explanation": "Methods can contain multiple lines of code. Everything inside the { } runs when you call the method.\n\nThe 'return' statement exits the method and sends back a value.",
+        "code": "string BuildGreeting()\n{\n    string part1 = \"Hello, \";\n    string part2 = \"Adventurer!\";\n    string full = part1 + part2;\n    return full;\n}\n\nConsole.WriteLine(BuildGreeting());",
+        "expectedOutput": "Hello, Adventurer!"
+      },
+      {
+        "title": "Calling Methods Multiple Times",
+        "explanation": "The power of methods: call them as many times as you want!\n\nEach call runs the method fresh and returns its value.",
+        "code": "int GetMagicNumber()\n{\n    return 42;\n}\n\nint a = GetMagicNumber();\nint b = GetMagicNumber();\nint c = GetMagicNumber();\n\nConsole.WriteLine(\"Sum: \" + (a + b + c));",
+        "expectedOutput": "Sum: 126"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create a method called GetGreeting that returns \"Hello, Adventurer!\"\n\nRemember:\n1. Return type is 'string'\n2. Method name is 'GetGreeting'\n3. Empty parentheses (no parameters)\n4. Return the exact string",
+        "code": "// Define your GetGreeting method here\n\nstring result = GetGreeting();\nConsole.WriteLine(result);",
+        "expectedOutput": "Hello, Adventurer!"
+      }
+    ]
+  }
 }

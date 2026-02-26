@@ -31,5 +31,63 @@
       "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions",
       "description": "Anonymous functions and lambdas"
     }
-  ]
+  ],
+  "tutorial": {
+    "title": "Expression Bodies: The Shorthand",
+    "steps": [
+      {
+        "explanation": "When a method body is just a single expression (one calculation or value), C# offers a shorter syntax.\n\nInstead of curly braces and 'return', you use the => arrow!",
+        "tip": "This is called 'expression body' syntax. It's popular because it reduces visual clutter."
+      },
+      {
+        "explanation": "Compare these two - they do EXACTLY the same thing:\n\n// Traditional:\nint Add(int a, int b)\n{\n    return a + b;\n}\n\n// Expression body:\nint Add(int a, int b) => a + b;\n\nShorter and cleaner!",
+        "codeExample": "// These are identical:\nint Double(int n) { return n * 2; }\nint Double(int n) => n * 2;",
+        "tip": "The => arrow means 'evaluates to' or 'returns'. Read it as 'Double of n returns n times 2'."
+      },
+      {
+        "explanation": "The syntax:\n\nreturnType Name(params) => expression;\n\n- No curly braces { }\n- No 'return' keyword\n- Just => and the expression\n- Don't forget the semicolon at the end!",
+        "codeExample": "string GetGreeting() => \"Hello!\";\nint Square(int x) => x * x;\nbool IsPositive(int n) => n > 0;",
+        "tip": "The expression's value automatically becomes the return value."
+      },
+      {
+        "explanation": "When to use expression body:\n\n- Method has ONE expression (one line of logic)\n- Simple calculations, returns, or property access\n\nWhen NOT to use:\n- Multiple statements\n- If/else logic\n- Loops",
+        "codeExample": "// Good for expression body:\nint Add(int a, int b) => a + b;\n\n// Too complex - use regular body:\nint Calculate(int x)\n{\n    if (x > 0)\n        return x * 2;\n    else\n        return x * -1;\n}",
+        "tip": "If you need more than one line, use the traditional { } syntax."
+      },
+      {
+        "explanation": "For this challenge, convert:\n\nint Add(int a, int b)\n{\n    return a + b;\n}\n\nTo expression body:\n\nint Add(int a, int b) => a + b;",
+        "codeExample": "int Add(int a, int b) => a + b;",
+        "tip": "Remove { }, remove 'return', add => before the expression!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Expression body syntax makes simple methods shorter and cleaner. Let's explore!",
+    "examples": [
+      {
+        "title": "Traditional vs Expression Body",
+        "explanation": "These two methods are IDENTICAL in behavior. The expression body version is just shorter.\n\nBoth return the same values!",
+        "code": "// Traditional style\nint DoubleTraditional(int n)\n{\n    return n * 2;\n}\n\n// Expression body style\nint DoubleExpression(int n) => n * 2;\n\nConsole.WriteLine(\"Traditional: \" + DoubleTraditional(5));\nConsole.WriteLine(\"Expression:  \" + DoubleExpression(5));",
+        "expectedOutput": "Traditional: 10\nExpression:  10"
+      },
+      {
+        "title": "Various Expression Bodies",
+        "explanation": "Expression bodies work with any return type. Here are several examples.\n\nNotice how clean and readable they are!",
+        "code": "string Greet(string name) => \"Hello, \" + name + \"!\";\nint Square(int x) => x * x;\nbool IsEven(int n) => n % 2 == 0;\ndouble Half(double n) => n / 2;\n\nConsole.WriteLine(Greet(\"Adventurer\"));\nConsole.WriteLine(\"5 squared: \" + Square(5));\nConsole.WriteLine(\"Is 4 even? \" + IsEven(4));\nConsole.WriteLine(\"Half of 10: \" + Half(10));",
+        "expectedOutput": "Hello, Adventurer!\n5 squared: 25\nIs 4 even? True\nHalf of 10: 5"
+      },
+      {
+        "title": "Multiple Parameters with Expression Body",
+        "explanation": "Expression bodies work great with multiple parameters too!\n\nThe entire expression after => becomes the return value.",
+        "code": "int Add(int a, int b) => a + b;\nint Multiply(int a, int b) => a * b;\nint Max(int a, int b) => a > b ? a : b;\nstring Combine(string a, string b) => a + \" \" + b;\n\nConsole.WriteLine(Add(17, 25));\nConsole.WriteLine(Multiply(6, 7));\nConsole.WriteLine(Max(10, 20));\nConsole.WriteLine(Combine(\"Hello\", \"World\"));",
+        "expectedOutput": "42\n42\n20\nHello World"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Write an Add method using expression body syntax.\n\nRemember: int Add(int a, int b) => a + b;",
+        "code": "// Define Add using expression body: type Name(params) => expression;\n\nConsole.WriteLine(Add(17, 25));\nConsole.WriteLine(Add(100, 200));\nConsole.WriteLine(Add(-5, 5));",
+        "expectedOutput": "42\n300\n0"
+      }
+    ]
+  }
 }
