@@ -1,0 +1,109 @@
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+<div class="code-editor-wrapper">
+    <div class="editor-header">Cast Your Spell (Write Code):</div>
+    <div id="@EditorId" class="monaco-container" style="height: @(Height)px;"></div>
+    <div class="editor-hint">
+        <span class="keyboard-shortcut">Ctrl+Enter</span> to cast spell
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string InitialCode { get; set; } = "";
+
+    [Parameter]
+    public int Height { get; set; } = 300;
+
+    [Parameter]
+    public EventCallback<string> OnCodeChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnRunRequested { get; set; }
+
+    private string EditorId = $"monaco-editor-{Guid.NewGuid():N}";
+    private DotNetObjectReference<MonacoEditor>? dotNetHelper;
+    private bool isInitialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            dotNetHelper = DotNetObjectReference.Create(this);
+
+            // Small delay to ensure DOM is ready
+            await Task.Delay(100);
+
+            isInitialized = await JSRuntime.InvokeAsync<bool>(
+                "monacoInterop.initialize",
+                EditorId,
+                InitialCode,
+                dotNetHelper);
+        }
+    }
+
+    [JSInvokable]
+    public async Task HandleCodeChangedFromJs(string code)
+    {
+        await OnCodeChanged.InvokeAsync(code);
+    }
+
+    [JSInvokable]
+    public async Task HandleRunCodeFromJs()
+    {
+        await OnRunRequested.InvokeAsync();
+    }
+
+    public async Task SetCode(string code)
+    {
+        if (isInitialized)
+        {
+            await JSRuntime.InvokeVoidAsync("monacoInterop.setValue", EditorId, code);
+        }
+    }
+
+    public async Task<string> GetCode()
+    {
+        if (isInitialized)
+        {
+            return await JSRuntime.InvokeAsync<string>("monacoInterop.getValue", EditorId);
+        }
+        return InitialCode;
+    }
+
+    public async Task SetMarkers(List<EditorMarker> markers)
+    {
+        if (isInitialized)
+        {
+            await JSRuntime.InvokeVoidAsync("monacoInterop.setMarkers", EditorId, markers);
+        }
+    }
+
+    public async Task ClearMarkers()
+    {
+        if (isInitialized)
+        {
+            await JSRuntime.InvokeVoidAsync("monacoInterop.clearMarkers", EditorId);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (isInitialized)
+        {
+            await JSRuntime.InvokeVoidAsync("monacoInterop.dispose", EditorId);
+        }
+        dotNetHelper?.Dispose();
+    }
+
+    public class EditorMarker
+    {
+        public string Severity { get; set; } = "error";
+        public int StartLine { get; set; }
+        public int StartColumn { get; set; }
+        public int? EndLine { get; set; }
+        public int? EndColumn { get; set; }
+        public string Message { get; set; } = "";
+    }
+}

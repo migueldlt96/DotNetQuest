@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:DotNetQuest.App.ViewModels"
+             xmlns:blazor="clr-namespace:Microsoft.AspNetCore.Components.WebView.Maui;assembly=Microsoft.AspNetCore.Components.WebView.Maui"
+             xmlns:components="clr-namespace:DotNetQuest.App.Components"
+             xmlns:converters="clr-namespace:DotNetQuest.App.Converters"
+             x:Class="DotNetQuest.App.Views.ChallengeView"
+             x:DataType="viewmodels:ChallengeViewModel"
+             BackgroundColor="#1a1a2e"
+             Title="{Binding CurrentChallenge.Title}">
+
+    <ContentPage.Resources>
+        <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+        <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+    </ContentPage.Resources>
+
+    <Grid>
+    <!-- Main Content Grid -->
+    <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*, *" Padding="20" ColumnSpacing="20" RowSpacing="15">
+
+        <!-- Header: Player Stats -->
+        <Frame Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="#16213e" BorderColor="#0f3460" CornerRadius="8" Padding="15">
+            <Grid ColumnDefinitions="*, Auto, Auto, Auto">
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="{Binding PlayerName, StringFormat='Code Mage: {0}'}"
+                           TextColor="#ffffff" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" />
+                    <Label Text="{Binding PlayerLevel, StringFormat='Level {0}'}"
+                           TextColor="#e94560" FontSize="16" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Frame Grid.Column="1" BackgroundColor="#0f3460" BorderColor="Transparent" CornerRadius="5" Padding="10,5">
+                    <Label Text="{Binding XpDisplay}" TextColor="#ffd700" FontSize="14" />
+                </Frame>
+
+                <Frame Grid.Column="2" BackgroundColor="#0f3460" BorderColor="Transparent" CornerRadius="5" Padding="10,5" Margin="10,0,0,0">
+                    <Label Text="{Binding ProgressDisplay}" TextColor="#00ff88" FontSize="14" />
+                </Frame>
+
+                <Frame Grid.Column="3" BackgroundColor="#0f3460" BorderColor="Transparent" CornerRadius="5" Padding="10,5" Margin="10,0,0,0">
+                    <Label Text="{Binding HintsDisplay}" TextColor="#88ccff" FontSize="14" />
+                </Frame>
+            </Grid>
+        </Frame>
+
+        <!-- Left Panel: Story & Challenge Info -->
+        <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#16213e" BorderColor="#0f3460" CornerRadius="8" Padding="20">
+            <ScrollView>
+                <VerticalStackLayout Spacing="20">
+                    <!-- Challenge Title -->
+                    <Label Text="{Binding CurrentChallenge.Title}"
+                           FontSize="24" FontAttributes="Bold" TextColor="#e94560" />
+
+                    <!-- Story -->
+                    <Frame BackgroundColor="#0f3460" BorderColor="Transparent" CornerRadius="8" Padding="15">
+                        <Label Text="{Binding CurrentChallenge.Story}"
+                               FontSize="14" TextColor="#cccccc" LineBreakMode="WordWrap" />
+                    </Frame>
+
+                    <!-- Concepts -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Concepts:" FontSize="12" TextColor="#888888" />
+                        <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding CurrentChallenge.Concepts}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Frame BackgroundColor="#e94560" BorderColor="Transparent" CornerRadius="12" Padding="8,4">
+                                        <Label Text="{Binding}" FontSize="11" TextColor="#ffffff" />
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- XP Reward -->
+                    <Label Text="{Binding CurrentChallenge.XpReward, StringFormat='Reward: {0} XP'}"
+                           FontSize="14" TextColor="#ffd700" />
+
+                    <!-- Test Cases -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Spell Targets:" FontSize="14" TextColor="#ffffff" FontAttributes="Bold" />
+                        <VerticalStackLayout Spacing="5" BindableLayout.ItemsSource="{Binding TestCaseDisplays}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodels:TestCaseDisplay">
+                                    <Frame BackgroundColor="{Binding BackgroundColor}" BorderColor="Transparent" CornerRadius="5" Padding="10,8">
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="{Binding StatusIcon}" FontSize="14" VerticalOptions="Center" />
+                                            <Label Text="{Binding Description}" FontSize="12" TextColor="#ffffff" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Current Hint -->
+                    <Frame BackgroundColor="#1a3a5c" BorderColor="#2a4a6c" CornerRadius="8" Padding="15"
+                           IsVisible="{Binding ShowHint}">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Hint:" FontSize="12" TextColor="#88ccff" FontAttributes="Bold" />
+                            <Label Text="{Binding CurrentHint}" FontSize="13" TextColor="#aaddff" LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Explore & Tutorial Buttons -->
+                    <HorizontalStackLayout Spacing="10">
+                        <Button Text="Explore First"
+                                Command="{Binding StartExplorationCommand}"
+                                BackgroundColor="#4a3a1a"
+                                TextColor="#ffdd88"
+                                CornerRadius="8"
+                                FontAttributes="Bold"
+                                IsVisible="{Binding HasExploration}" />
+
+                        <Button Text="Learn Concepts"
+                                Command="{Binding OpenTutorialCommand}"
+                                BackgroundColor="#1a5a3a"
+                                TextColor="#88ffaa"
+                                CornerRadius="8"
+                                FontAttributes="Bold"
+                                IsVisible="{Binding HasTutorial}" />
+                    </HorizontalStackLayout>
+
+                    <!-- Reading Material -->
+                    <Frame BackgroundColor="#2a1a3a" BorderColor="#3a2a4a" CornerRadius="8" Padding="15"
+                           IsVisible="{Binding HasReadingMaterial}">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Reading Material:" FontSize="14" TextColor="#cc88ff" FontAttributes="Bold" />
+                            <Label Text="Stuck? These resources can help:" FontSize="11" TextColor="#aa88cc" />
+                            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding ReadingMaterialItems}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="viewmodels:ReadingMaterialDisplay">
+                                        <Frame BackgroundColor="#3a2a4a" BorderColor="Transparent" CornerRadius="6" Padding="10">
+                                            <VerticalStackLayout Spacing="4">
+                                                <Label Text="{Binding Title}" FontSize="13" TextColor="#dd99ff" FontAttributes="Bold" />
+                                                <Label Text="{Binding Description}" FontSize="11" TextColor="#aa88cc" LineBreakMode="WordWrap" />
+                                                <Label Text="{Binding Url}" FontSize="10" TextColor="#8866aa" TextDecorations="Underline">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ChallengeViewModel}}, Path=OpenUrlCommand}"
+                                                            CommandParameter="{Binding Url}" />
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </VerticalStackLayout>
+                                        </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Frame>
+
+        <!-- Right Panel: Code Editor with Monaco -->
+        <Border Grid.Row="1" Grid.Column="1" BackgroundColor="#16213e" Stroke="#0f3460" StrokeShape="RoundRectangle 8">
+            <blazor:BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
+                <blazor:BlazorWebView.RootComponents>
+                    <blazor:RootComponent Selector="#app" ComponentType="{x:Type components:CodeEditorPage}" />
+                </blazor:BlazorWebView.RootComponents>
+            </blazor:BlazorWebView>
+        </Border>
+
+        <!-- Bottom: Action Buttons -->
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" ColumnDefinitions="Auto, Auto, Auto, Auto, *, Auto" ColumnSpacing="15">
+
+            <Button Text="Get Hint"
+                    Command="{Binding GetHintCommand}"
+                    BackgroundColor="#2a4a6c"
+                    TextColor="#88ccff"
+                    CornerRadius="8"
+                    WidthRequest="100"
+                    IsEnabled="{Binding CanGetHint}" />
+
+            <Button Grid.Column="1"
+                    Text="Reset"
+                    Command="{Binding ResetCodeCommand}"
+                    BackgroundColor="#4a2a2a"
+                    TextColor="#ff8888"
+                    CornerRadius="8"
+                    WidthRequest="80" />
+
+            <Button Grid.Column="2"
+                    Text="Save"
+                    Command="{Binding SaveGameCommand}"
+                    BackgroundColor="#2a5a4a"
+                    TextColor="#88ffcc"
+                    CornerRadius="8"
+                    WidthRequest="80" />
+
+            <Button Grid.Column="3"
+                    Text="Realms"
+                    Command="{Binding OpenRealmSelectCommand}"
+                    BackgroundColor="#5a4a2a"
+                    TextColor="#ffcc88"
+                    CornerRadius="8"
+                    WidthRequest="80" />
+
+            <!-- Save Status Message -->
+            <Frame Grid.Column="4" BackgroundColor="#1a4a3a" BorderColor="#2a6a4a" CornerRadius="5"
+                   Padding="10,5" HorizontalOptions="Center" VerticalOptions="Center"
+                   IsVisible="{Binding ShowSaveStatus}">
+                <Label Text="{Binding SaveStatusMessage}" TextColor="#88ffcc" FontSize="12" />
+            </Frame>
+
+            <Button Grid.Column="5"
+                    Text="{Binding SubmitButtonText}"
+                    Command="{Binding SubmitCodeCommand}"
+                    BackgroundColor="#e94560"
+                    TextColor="#ffffff"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    WidthRequest="160"
+                    HeightRequest="50" />
+        </Grid>
+
+    </Grid>
+
+    <!-- Exploration Mode Overlay -->
+    <Grid BackgroundColor="#EE000000" IsVisible="{Binding IsExplorationMode}">
+        <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*, *" Padding="20" ColumnSpacing="20" RowSpacing="15">
+
+            <!-- Header -->
+            <Frame Grid.ColumnSpan="2" BackgroundColor="#3a2a1a" BorderColor="#5a4a2a" CornerRadius="8" Padding="15">
+                <Grid ColumnDefinitions="*, Auto, Auto">
+                    <VerticalStackLayout>
+                        <Label Text="EXPLORATION MODE" FontSize="20" FontAttributes="Bold" TextColor="#ffdd88" />
+                        <Label Text="{Binding CurrentExploration.Introduction}" FontSize="13" TextColor="#ccaa66" />
+                    </VerticalStackLayout>
+                    <Label Grid.Column="1" Text="{Binding ExampleProgress}" FontSize="14" TextColor="#ffdd88"
+                           VerticalOptions="Center" Margin="0,0,20,0" />
+                    <Button Grid.Column="2" Text="Ready for Challenge"
+                            Command="{Binding ExitExplorationCommand}"
+                            BackgroundColor="#e94560" TextColor="#ffffff"
+                            FontAttributes="Bold" CornerRadius="8" HeightRequest="40" />
+                </Grid>
+            </Frame>
+
+            <!-- Left: Example Explanation -->
+            <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#2a2a1a" BorderColor="#4a4a2a" CornerRadius="8" Padding="20">
+                <ScrollView>
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="{Binding CurrentExample.Title}"
+                               FontSize="20" FontAttributes="Bold" TextColor="#ffcc66" />
+
+                        <Label Text="{Binding CurrentExample.Explanation}"
+                               FontSize="14" TextColor="#dddddd" LineBreakMode="WordWrap" />
+
+                        <!-- Expected Output -->
+                        <Frame BackgroundColor="#1a1a10" BorderColor="#3a3a20" CornerRadius="8" Padding="15"
+                               IsVisible="{Binding CurrentExample.ExpectedOutput, Converter={StaticResource IsNotNullConverter}}">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="Expected Output:" FontSize="11" TextColor="#aaaa66" />
+                                <Label Text="{Binding CurrentExample.ExpectedOutput}"
+                                       FontSize="14" TextColor="#ffcc00" FontFamily="Consolas" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Actual Output -->
+                        <Frame BackgroundColor="#1a2a1a" BorderColor="#2a4a2a" CornerRadius="8" Padding="15"
+                               IsVisible="{Binding ExplorationOutput, Converter={StaticResource IsNotNullConverter}}">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="Your Output:" FontSize="11" TextColor="#88aa88" />
+                                <Label Text="{Binding ExplorationOutput}"
+                                       FontSize="14" TextColor="#88ff88" FontFamily="Consolas" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Navigation -->
+                        <Grid ColumnDefinitions="Auto, *, Auto" Margin="0,10,0,0">
+                            <Button Text="Previous"
+                                    Command="{Binding PrevExampleCommand}"
+                                    BackgroundColor="#4a3a1a" TextColor="#ffcc88"
+                                    CornerRadius="8" WidthRequest="100"
+                                    IsEnabled="{Binding CanPrevExample}" />
+                            <Button Grid.Column="2" Text="Next Example"
+                                    Command="{Binding NextExampleCommand}"
+                                    BackgroundColor="#4a3a1a" TextColor="#ffcc88"
+                                    CornerRadius="8" WidthRequest="120"
+                                    IsEnabled="{Binding CanNextExample}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Frame>
+
+            <!-- Right: Code Editor (reusing the Blazor component) -->
+            <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#16213e" BorderColor="#0f3460" CornerRadius="8" Padding="0">
+                <Grid RowDefinitions="*, Auto">
+                    <blazor:BlazorWebView HostPage="wwwroot/index.html">
+                        <blazor:BlazorWebView.RootComponents>
+                            <blazor:RootComponent Selector="#app" ComponentType="{x:Type components:CodeEditorPage}" />
+                        </blazor:BlazorWebView.RootComponents>
+                    </blazor:BlazorWebView>
+
+                    <!-- Exploration Action Buttons -->
+                    <HorizontalStackLayout Grid.Row="1" Spacing="10" Padding="10" HorizontalOptions="Center">
+                        <Button Text="Reset Example"
+                                Command="{Binding LoadExampleCodeCommand}"
+                                BackgroundColor="#4a3a2a" TextColor="#ffcc88"
+                                CornerRadius="8" HeightRequest="40" />
+                        <Button Text="Run Code"
+                                Command="{Binding RunExplorationCodeCommand}"
+                                BackgroundColor="#2a6a3a" TextColor="#88ff88"
+                                FontAttributes="Bold" CornerRadius="8" HeightRequest="40" WidthRequest="120" />
+                    </HorizontalStackLayout>
+                </Grid>
+            </Frame>
+
+            <!-- Footer Tip -->
+            <Frame Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="#2a2a1a" BorderColor="#4a4a2a"
+                   CornerRadius="8" Padding="10">
+                <Label Text="Experiment freely! Modify the code, run it, and see what happens. No tests, no pressure. Click 'Ready for Challenge' when you feel confident."
+                       FontSize="12" TextColor="#aaaa66" HorizontalOptions="Center" />
+            </Frame>
+        </Grid>
+    </Grid>
+
+    <!-- Realm Select Overlay -->
+    <Grid BackgroundColor="#CC000000" IsVisible="{Binding ShowRealmSelect}">
+        <Frame BackgroundColor="#2a1a3a" BorderColor="#4a3a5a" CornerRadius="12"
+               Padding="30" Margin="50"
+               HorizontalOptions="Center" VerticalOptions="Center"
+               WidthRequest="450">
+            <Grid RowDefinitions="Auto, *, Auto" RowSpacing="20">
+                <!-- Header -->
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="Select Realm"
+                           FontSize="24" FontAttributes="Bold" TextColor="#ffcc88" />
+                    <Button Grid.Column="1" Text="X"
+                            Command="{Binding CloseRealmSelectCommand}"
+                            BackgroundColor="#4a2a2a" TextColor="#ff8888"
+                            WidthRequest="40" HeightRequest="40" CornerRadius="20"
+                            FontAttributes="Bold" />
+                </Grid>
+
+                <!-- Realm List -->
+                <ScrollView Grid.Row="1">
+                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding RealmOptions}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodels:RealmOption">
+                                <Button Text="{Binding RealmName}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ChallengeViewModel}}, Path=SelectRealmCommand}"
+                                        CommandParameter="{Binding RealmId}"
+                                        BackgroundColor="{Binding IsCurrent, Converter={StaticResource BoolToColorConverter}}"
+                                        TextColor="#ffffff"
+                                        FontSize="16"
+                                        CornerRadius="8"
+                                        HeightRequest="50" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- Info -->
+                <Label Grid.Row="2" Text="Skip to any realm to practice specific concepts"
+                       FontSize="12" TextColor="#aa88cc" HorizontalOptions="Center" />
+            </Grid>
+        </Frame>
+    </Grid>
+
+    <!-- Tutorial Overlay -->
+    <Grid BackgroundColor="#CC000000" IsVisible="{Binding ShowTutorial}">
+        <Frame BackgroundColor="#1a2a3a" BorderColor="#2a4a6a" CornerRadius="12"
+               Padding="30" Margin="50"
+               HorizontalOptions="Center" VerticalOptions="Center"
+               WidthRequest="700" MaximumHeightRequest="600">
+            <Grid RowDefinitions="Auto, *, Auto" RowSpacing="20">
+                <!-- Tutorial Header -->
+                <Grid ColumnDefinitions="*, Auto">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding CurrentTutorial.Title}"
+                               FontSize="24" FontAttributes="Bold" TextColor="#88ffaa" />
+                        <Label Text="{Binding TutorialProgress}"
+                               FontSize="12" TextColor="#88aacc" Margin="0,5,0,0" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1" Text="X"
+                            Command="{Binding CloseTutorialCommand}"
+                            BackgroundColor="#4a2a2a" TextColor="#ff8888"
+                            WidthRequest="40" HeightRequest="40" CornerRadius="20"
+                            FontAttributes="Bold" />
+                </Grid>
+
+                <!-- Tutorial Content -->
+                <ScrollView Grid.Row="1">
+                    <VerticalStackLayout Spacing="15" IsVisible="{Binding DisplayedStep, Converter={StaticResource IsNotNullConverter}}">
+                        <!-- Explanation -->
+                        <Label Text="{Binding DisplayedStep.Explanation}"
+                               FontSize="16" TextColor="#dddddd" LineBreakMode="WordWrap" />
+
+                        <!-- Code Example -->
+                        <Frame BackgroundColor="#0a1520" BorderColor="#1a3550" CornerRadius="8" Padding="15"
+                               IsVisible="{Binding DisplayedStep.CodeExample, Converter={StaticResource IsNotNullConverter}}">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="Example Code:" FontSize="11" TextColor="#88aacc" />
+                                <Label Text="{Binding DisplayedStep.CodeExample}"
+                                       FontSize="14" TextColor="#00ff88" FontFamily="Consolas" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Code Output -->
+                        <Frame BackgroundColor="#0a1520" BorderColor="#1a3550" CornerRadius="8" Padding="15"
+                               IsVisible="{Binding DisplayedStep.CodeOutput, Converter={StaticResource IsNotNullConverter}}">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="Output:" FontSize="11" TextColor="#88aacc" />
+                                <Label Text="{Binding DisplayedStep.CodeOutput}"
+                                       FontSize="14" TextColor="#ffcc00" FontFamily="Consolas" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Tip -->
+                        <Frame BackgroundColor="#2a3a1a" BorderColor="#3a5a2a" CornerRadius="8" Padding="15"
+                               IsVisible="{Binding DisplayedStep.Tip, Converter={StaticResource IsNotNullConverter}}">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="TIP" FontSize="12" FontAttributes="Bold" TextColor="#aaff88"
+                                       VerticalOptions="Start" />
+                                <Label Text="{Binding DisplayedStep.Tip}"
+                                       FontSize="14" TextColor="#ccddaa" LineBreakMode="WordWrap" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- Tutorial Navigation -->
+                <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                    <Button Text="Previous"
+                            Command="{Binding PrevTutorialStepCommand}"
+                            BackgroundColor="#2a4a6c" TextColor="#88ccff"
+                            CornerRadius="8" WidthRequest="100"
+                            IsEnabled="{Binding CanGoPrevStep}" />
+
+                    <Button Grid.Column="2" Text="Next"
+                            Command="{Binding NextTutorialStepCommand}"
+                            BackgroundColor="#2a4a6c" TextColor="#88ccff"
+                            CornerRadius="8" WidthRequest="100"
+                            IsEnabled="{Binding CanGoNextStep}" />
+                </Grid>
+            </Grid>
+        </Frame>
+    </Grid>
+    </Grid>
+
+</ContentPage>

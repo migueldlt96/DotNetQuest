@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:DotNetQuest.App.ViewModels"
+             x:Class="DotNetQuest.App.Views.TitleView"
+             x:DataType="viewmodels:TitleViewModel"
+             BackgroundColor="#1a1a2e">
+
+    <Grid RowDefinitions="*, Auto, *" Padding="40">
+        <!-- Title Section -->
+        <VerticalStackLayout Grid.Row="0" VerticalOptions="End" HorizontalOptions="Center" Spacing="10">
+            <Label Text="DOTNET QUEST"
+                   FontSize="48"
+                   FontAttributes="Bold"
+                   TextColor="#e94560"
+                   HorizontalOptions="Center" />
+            <Label Text="Master the Ancient Arts of C#"
+                   FontSize="18"
+                   TextColor="#888888"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Player Info / Start Section -->
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" Spacing="20" Margin="0,40">
+
+            <Frame BackgroundColor="#16213e" BorderColor="#0f3460" CornerRadius="10" Padding="30" WidthRequest="400">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Enter Your Name, Code Mage"
+                           FontSize="16"
+                           TextColor="#ffffff"
+                           HorizontalOptions="Center" />
+
+                    <Entry Text="{Binding PlayerName}"
+                           Placeholder="Your name..."
+                           PlaceholderColor="#666666"
+                           TextColor="#ffffff"
+                           BackgroundColor="#0f3460"
+                           FontSize="18"
+                           HorizontalOptions="Fill" />
+
+                    <Button Text="Begin Your Quest"
+                            Command="{Binding StartGameCommand}"
+                            BackgroundColor="#e94560"
+                            TextColor="#ffffff"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Margin="0,10,0,0" />
+
+                    <Button Text="Continue Saved Game"
+                            Command="{Binding LoadGameCommand}"
+                            BackgroundColor="#2a4a6c"
+                            TextColor="#88ccff"
+                            FontSize="16"
+                            CornerRadius="8"
+                            HeightRequest="45"
+                            IsVisible="{Binding HasSaveFile}" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+
+        <!-- Footer -->
+        <VerticalStackLayout Grid.Row="2" VerticalOptions="End" HorizontalOptions="Center" Spacing="5">
+            <Label Text="A Journey Through .NET Fundamentals"
+                   FontSize="14"
+                   TextColor="#666666"
+                   HorizontalOptions="Center" />
+            <Label Text="Valley of Variables - Your Adventure Awaits"
+                   FontSize="12"
+                   TextColor="#444444"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>

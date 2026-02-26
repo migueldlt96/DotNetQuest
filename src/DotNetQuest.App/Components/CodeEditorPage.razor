@@ -1,0 +1,184 @@
+@using DotNetQuest.Core.Models
+@using DotNetQuest.CodeEngine
+@using DotNetQuest.App.Services
+
+@inject CodeCompiler CodeCompiler
+@inject EditorStateService EditorState
+
+@implements IDisposable
+
+<div style="display: flex; flex-direction: column; height: 100%; padding: 15px; background-color: #16213e;">
+    <MonacoEditor @ref="monacoEditor"
+                  InitialCode="@currentCode"
+                  Height="350"
+                  OnCodeChanged="HandleCodeChanged"
+                  OnRunRequested="HandleRunCode" />
+
+    @if (showFeedback)
+    {
+        <div style="margin-top: 15px; padding: 15px; border-radius: 8px; background-color: @feedbackBackground;">
+            <div style="font-size: 16px; font-weight: bold; color: @feedbackTitleColor; margin-bottom: 8px;">
+                @feedbackTitle
+            </div>
+            <div style="font-size: 13px; color: #ffffff; white-space: pre-wrap;">
+                @feedbackMessage
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private MonacoEditor? monacoEditor;
+    private string currentCode = "";
+    private Challenge? currentChallenge;
+
+    private bool showFeedback = false;
+    private string feedbackTitle = "";
+    private string feedbackMessage = "";
+    private string feedbackBackground = "#2a3a5a";
+    private string feedbackTitleColor = "#ffffff";
+
+    protected override void OnInitialized()
+    {
+        // Subscribe to state changes
+        EditorState.ChallengeChanged += OnChallengeChanged;
+        EditorState.CompileRequested += OnCompileRequested;
+
+        // Initialize with current state
+        if (EditorState.CurrentChallenge != null)
+        {
+            currentChallenge = EditorState.CurrentChallenge;
+            currentCode = EditorState.CurrentCode;
+        }
+    }
+
+    private async void OnChallengeChanged(object? sender, EventArgs e)
+    {
+        await InvokeAsync(async () =>
+        {
+            currentChallenge = EditorState.CurrentChallenge;
+            currentCode = EditorState.CurrentCode;
+            showFeedback = false;
+
+            if (monacoEditor != null)
+            {
+                await monacoEditor.SetCode(currentCode);
+                await monacoEditor.ClearMarkers();
+            }
+
+            StateHasChanged();
+        });
+    }
+
+    private async Task OnCompileRequested()
+    {
+        await CompileAndRun();
+    }
+
+    private async Task HandleCodeChanged(string code)
+    {
+        currentCode = code;
+        EditorState.UpdateCode(code);
+
+        // Clear previous markers when code changes
+        if (monacoEditor != null)
+        {
+            await monacoEditor.ClearMarkers();
+        }
+    }
+
+    private async Task HandleRunCode()
+    {
+        await CompileAndRun();
+    }
+
+    private async Task CompileAndRun()
+    {
+        if (currentChallenge == null) return;
+
+        // Get latest code from editor
+        if (monacoEditor != null)
+        {
+            currentCode = await monacoEditor.GetCode();
+            EditorState.UpdateCode(currentCode);
+        }
+
+        showFeedback = true;
+        feedbackTitle = "Casting spell...";
+        feedbackMessage = "The ancient runes glow as your code is evaluated...";
+        feedbackBackground = "#2a3a5a";
+        feedbackTitleColor = "#ffffff";
+        StateHasChanged();
+
+        // Small delay for visual feedback
+        await Task.Delay(300);
+
+        var result = await CodeCompiler.CompileAndRunAsync(currentCode, currentChallenge);
+
+        // Set markers for errors
+        if (monacoEditor != null && result.Errors.Any())
+        {
+            var markers = result.Errors.Select(e => new MonacoEditor.EditorMarker
+            {
+                Severity = "error",
+                StartLine = e.Line > 0 ? e.Line : 1,
+                StartColumn = e.Column > 0 ? e.Column : 1,
+                Message = e.GameFriendlyMessage
+            }).ToList();
+
+            await monacoEditor.SetMarkers(markers);
+        }
+        else if (monacoEditor != null)
+        {
+            await monacoEditor.ClearMarkers();
+        }
+
+        // Update feedback display
+        if (result.Success)
+        {
+            feedbackTitle = "SUCCESS!";
+            feedbackMessage = result.GameMessage ?? "Your spell worked perfectly!";
+            feedbackBackground = "#1a4a2a";
+            feedbackTitleColor = "#00ff88";
+        }
+        else
+        {
+            feedbackTitle = "SPELL FAILED";
+            if (result.Errors.Any())
+            {
+                var error = result.Errors.First();
+                feedbackMessage = $"{result.GameMessage}\n\n{error.GameFriendlyMessage}";
+                if (error.Line > 0)
+                {
+                    feedbackMessage += $"\n(Line {error.Line})";
+                }
+            }
+            else
+            {
+                feedbackMessage = result.GameMessage ?? "Something went wrong.";
+                var failedTests = result.TestResults.Where(t => !t.Passed).ToList();
+                if (failedTests.Any())
+                {
+                    feedbackMessage += "\n\nFailed targets:";
+                    foreach (var test in failedTests)
+                    {
+                        feedbackMessage += $"\n- {test.Description}";
+                    }
+                }
+            }
+            feedbackBackground = "#4a1a2a";
+            feedbackTitleColor = "#ff6688";
+        }
+
+        StateHasChanged();
+
+        // Notify the MAUI side
+        EditorState.NotifyCompilationComplete(result);
+    }
+
+    public void Dispose()
+    {
+        EditorState.ChallengeChanged -= OnChallengeChanged;
+        EditorState.CompileRequested -= OnCompileRequested;
+    }
+}
