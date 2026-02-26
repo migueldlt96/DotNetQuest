@@ -1,0 +1,35 @@
+{
+  "id": "var-004",
+  "realm": "valley-of-variables",
+  "title": "The Alchemist's Precision",
+  "story": "The village alchemist peers through her spectacles. \"Potions require precise measurements! I need exactly 3.14159 units of moonwater. Create a 'double' variable called 'moonwater' to store this amount.\"",
+  "type": "CodeCompletion",
+  "difficulty": 2,
+  "xpReward": 75,
+  "starterCode": "// Declare a double variable called 'moonwater' with value 3.14159\n",
+  "solution": "double moonwater = 3.14159;",
+  "testCases": [
+    {
+      "description": "moonwater should equal 3.14159",
+      "assertion": "Math.Abs(moonwater - 3.14159) < 0.00001"
+    }
+  ],
+  "hints": [
+    "Decimal numbers use the 'double' type",
+    "double is for numbers with decimal points",
+    "double moonwater = 3.14159;"
+  ],
+  "concepts": ["variables", "double", "decimals"],
+  "readingMaterial": [
+    {
+      "title": "Floating-Point Types",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types",
+      "description": "Understanding float, double, and decimal types"
+    },
+    {
+      "title": "Numeric Types",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions",
+      "description": "Converting between number types"
+    }
+  ]
+}

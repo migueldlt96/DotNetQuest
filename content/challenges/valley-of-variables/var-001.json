@@ -1,0 +1,99 @@
+{
+  "id": "var-001",
+  "realm": "valley-of-variables",
+  "title": "The Naming Ritual",
+  "story": "Welcome, young Code Mage! The village elder approaches you with an ancient scroll. \"To begin your journey, you must learn the first spell of our craft - the Variable Declaration. Declare a string variable called 'heroName' and bind it to the name 'Aria'.\"",
+  "type": "CodeCompletion",
+  "difficulty": 1,
+  "xpReward": 50,
+  "starterCode": "// Declare a string variable called 'heroName' and assign it the value \"Aria\"\n",
+  "solution": "string heroName = \"Aria\";",
+  "testCases": [
+    {
+      "description": "heroName should equal \"Aria\"",
+      "assertion": "heroName == \"Aria\""
+    }
+  ],
+  "hints": [
+    "In C#, we declare variables with: type name = value;",
+    "Text values are called 'strings' and need double quotes",
+    "The full syntax is: string heroName = \"Aria\";"
+  ],
+  "concepts": ["variables", "strings", "assignment"],
+  "readingMaterial": [
+    {
+      "title": "C# Variables",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/declarations",
+      "description": "Official docs on declaring variables in C#"
+    },
+    {
+      "title": "String Type",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/",
+      "description": "Working with text strings in C#"
+    },
+    {
+      "title": "C# Tutorial",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/",
+      "description": "A tour of the C# language"
+    }
+  ],
+  "tutorial": {
+    "title": "Variables: Storing Data",
+    "steps": [
+      {
+        "explanation": "In programming, a VARIABLE is like a labeled box where you can store information. Just like you might label a box 'Photos' to store pictures, you give variables names to store data.",
+        "tip": "Think of a variable as a sticky note with a name on it, attached to a value."
+      },
+      {
+        "explanation": "In C#, every variable has a TYPE that tells the computer what kind of data it holds. For text (words, sentences, names), we use the type 'string'.",
+        "codeExample": "string",
+        "tip": "The word 'string' refers to a 'string of characters' - letters connected together!"
+      },
+      {
+        "explanation": "To create a variable, you write: TYPE NAME = VALUE;\n\nThe equals sign (=) means 'assign this value to this variable'.",
+        "codeExample": "string playerName = \"Alex\";",
+        "tip": "The semicolon (;) at the end tells C# that your statement is complete."
+      },
+      {
+        "explanation": "String values MUST be wrapped in double quotes (\"). This tells C# where the text starts and ends.",
+        "codeExample": "string greeting = \"Hello World\";",
+        "codeOutput": "The variable 'greeting' now holds: Hello World",
+        "tip": "Without quotes, C# would think you're referring to other variables named Hello and World!"
+      },
+      {
+        "explanation": "Now you're ready! Create a string variable named 'heroName' and give it the value \"Aria\". Remember: type, name, equals, value in quotes, semicolon!",
+        "codeExample": "string heroName = \"Aria\";",
+        "tip": "Copy this pattern exactly - just make sure to use the name 'heroName' and the value \"Aria\"."
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Let's play with string variables! Try running each example, then modify the code to see what happens.",
+    "examples": [
+      {
+        "title": "Creating a String Variable",
+        "explanation": "This is the basic pattern for creating a string variable. The variable 'message' holds the text \"Hello!\" and we print it out.\n\nTry changing \"Hello!\" to something else and run the code!",
+        "code": "string message = \"Hello!\";\nConsole.WriteLine(message);",
+        "expectedOutput": "Hello!"
+      },
+      {
+        "title": "Variables Can Be Changed",
+        "explanation": "Once you create a variable, you can change its value later. Notice we don't write 'string' again - the variable already exists!\n\nTry adding a third line that changes 'name' to your own name.",
+        "code": "string name = \"Alice\";\nConsole.WriteLine(name);\nname = \"Bob\";\nConsole.WriteLine(name);",
+        "expectedOutput": "Alice\nBob"
+      },
+      {
+        "title": "Combining Strings",
+        "explanation": "You can combine strings using the + operator. This is called 'concatenation'.\n\nTry changing the greeting or the name!",
+        "code": "string greeting = \"Hello, \";\nstring name = \"Adventurer\";\nstring fullMessage = greeting + name + \"!\";\nConsole.WriteLine(fullMessage);",
+        "expectedOutput": "Hello, Adventurer!"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Now create your own string variable called 'heroName' with the value \"Aria\" and print it.\n\nThis is exactly what you'll need for the challenge!",
+        "code": "// Create a string variable called heroName with value \"Aria\"\n// Then print it with Console.WriteLine(heroName);\n\n",
+        "expectedOutput": "Aria"
+      }
+    ]
+  }
+}

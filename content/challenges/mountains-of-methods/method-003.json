@@ -1,0 +1,30 @@
+{
+  "id": "method-003",
+  "realm": "mountains-of-methods",
+  "title": "The Multi-Parameter Portal",
+  "story": "\"Excellent progress! Now combine multiple inputs. Create a method 'Add' that takes two integers 'a' and 'b' and returns their sum.\"",
+  "type": "SpellCraft",
+  "difficulty": 5,
+  "xpReward": 150,
+  "starterCode": "// Define Add(int a, int b) that returns a + b\n\nint result = Add(17, 25);",
+  "solution": "int Add(int a, int b) { return a + b; }",
+  "testCases": [
+    {
+      "description": "Add(17, 25) should return 42",
+      "assertion": "result == 42"
+    }
+  ],
+  "hints": [
+    "Multiple parameters are separated by commas",
+    "int Add(int a, int b) defines a method with two int parameters",
+    "int Add(int a, int b) { return a + b; }"
+  ],
+  "concepts": ["methods", "multiple-parameters", "addition"],
+  "readingMaterial": [
+    {
+      "title": "Method Parameters",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/passing-parameters",
+      "description": "Working with multiple parameters"
+    }
+  ]
+}

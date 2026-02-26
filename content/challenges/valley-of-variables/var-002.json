@@ -1,0 +1,35 @@
+{
+  "id": "var-002",
+  "realm": "valley-of-variables",
+  "title": "The Counting Stone",
+  "story": "The blacksmith needs help tracking his inventory. \"I need you to store the number of swords I've forged today. Create an integer variable called 'swordCount' and set it to 42.\"",
+  "type": "CodeCompletion",
+  "difficulty": 1,
+  "xpReward": 50,
+  "starterCode": "// Declare an integer variable called 'swordCount' with value 42\n",
+  "solution": "int swordCount = 42;",
+  "testCases": [
+    {
+      "description": "swordCount should equal 42",
+      "assertion": "swordCount == 42"
+    }
+  ],
+  "hints": [
+    "Whole numbers use the 'int' type",
+    "Numbers don't need quotes like strings do",
+    "The syntax is: int swordCount = 42;"
+  ],
+  "concepts": ["variables", "integers", "assignment"],
+  "readingMaterial": [
+    {
+      "title": "Integral Types",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types",
+      "description": "Understanding int, long, and other number types"
+    },
+    {
+      "title": "C# Variables",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/declarations",
+      "description": "How to declare and use variables"
+    }
+  ]
+}

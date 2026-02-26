@@ -1,0 +1,59 @@
+{
+  "id": "flow-002",
+  "realm": "forest-of-flow",
+  "title": "The Branching Path",
+  "story": "The path splits before you. A forest spirit speaks: \"Your destiny depends on your level! If playerLevel is 5 or higher, set 'canEnterDungeon' to true, otherwise false. The adventurer's level is 7.\"",
+  "type": "SpellCraft",
+  "difficulty": 3,
+  "xpReward": 100,
+  "starterCode": "int playerLevel = 7;\nbool canEnterDungeon;\n// Use an if-else to set canEnterDungeon\n",
+  "solution": "if (playerLevel >= 5) { canEnterDungeon = true; } else { canEnterDungeon = false; }",
+  "testCases": [
+    {
+      "description": "canEnterDungeon should be true",
+      "assertion": "canEnterDungeon == true"
+    }
+  ],
+  "hints": [
+    "Use if (condition) { } else { }",
+    "The condition checks if playerLevel >= 5",
+    "if (playerLevel >= 5) { canEnterDungeon = true; } else { canEnterDungeon = false; }"
+  ],
+  "concepts": ["if-else", "conditionals", "branching"],
+  "readingMaterial": [
+    {
+      "title": "If Statement",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/selection-statements#the-if-statement",
+      "description": "Conditional branching with if-else"
+    },
+    {
+      "title": "Selection Statements",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/selection-statements",
+      "description": "All branching statements in C#"
+    }
+  ],
+  "tutorial": {
+    "title": "If-Else: Making Decisions",
+    "steps": [
+      {
+        "explanation": "Programs need to make decisions! An IF statement lets code do different things based on whether something is true or false.\n\nThink of it like a fork in the road: \"IF it's raining, take an umbrella. ELSE, wear sunglasses.\"",
+        "tip": "The computer can only go ONE path - either the 'if' path or the 'else' path, never both!"
+      },
+      {
+        "explanation": "The basic structure is:\n\nif (condition)\n{\n    // do this if condition is TRUE\n}\nelse\n{\n    // do this if condition is FALSE\n}",
+        "codeExample": "if (condition)\n{\n    // true path\n}\nelse\n{\n    // false path\n}",
+        "tip": "The condition must be inside parentheses ( ). The code blocks must be inside curly braces { }."
+      },
+      {
+        "explanation": "The CONDITION is a question that has a yes/no answer (true/false).\n\nCommon comparison operators:\n- >   greater than\n- <   less than\n- >=  greater than OR equal to\n- <=  less than OR equal to\n- ==  equals (note: TWO equal signs!)\n- !=  not equals",
+        "codeExample": "5 > 3    // true\n10 < 5   // false\n7 >= 7   // true (7 equals 7)\n3 == 3   // true\n3 != 5   // true (3 is not 5)",
+        "tip": "Be careful! One = assigns a value. Two == compares values!"
+      },
+      {
+        "explanation": "For this challenge, you need to:\n1. Check if playerLevel >= 5 (is the level 5 or higher?)\n2. If TRUE: set canEnterDungeon = true\n3. If FALSE: set canEnterDungeon = false\n\nSince playerLevel is 7, and 7 >= 5 is true, the dungeon access should be granted!",
+        "codeExample": "if (playerLevel >= 5)\n{\n    canEnterDungeon = true;\n}\nelse\n{\n    canEnterDungeon = false;\n}",
+        "tip": "You can write this all on one line if you prefer: if (playerLevel >= 5) { canEnterDungeon = true; } else { canEnterDungeon = false; }"
+      }
+    ]
+  }
+}

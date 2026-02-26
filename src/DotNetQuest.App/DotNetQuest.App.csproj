@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\content\challenges\**\*.json" CopyToOutputDirectory="PreserveNewest" LinkBase="challenges" />
+    <MauiAsset Include="..\..\content\challenges\**\*.json" LogicalName="challenges/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

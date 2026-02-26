@@ -1,0 +1,35 @@
+{
+  "id": "var-003",
+  "realm": "valley-of-variables",
+  "title": "The Merchant's Calculation",
+  "story": "The traveling merchant scratches her head. \"I have 15 gold coins and just earned 27 more from selling potions. Can you calculate my total wealth? Store the result in a variable called 'totalGold'.\"",
+  "type": "SpellCraft",
+  "difficulty": 2,
+  "xpReward": 75,
+  "starterCode": "// Calculate 15 + 27 and store it in 'totalGold'\n",
+  "solution": "int totalGold = 15 + 27;",
+  "testCases": [
+    {
+      "description": "totalGold should equal 42",
+      "assertion": "totalGold == 42"
+    }
+  ],
+  "hints": [
+    "You can use + to add numbers together",
+    "The result of addition can be stored directly in a variable",
+    "int totalGold = 15 + 27;"
+  ],
+  "concepts": ["variables", "integers", "operators", "addition"],
+  "readingMaterial": [
+    {
+      "title": "Arithmetic Operators",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/arithmetic-operators",
+      "description": "Addition, subtraction, multiplication and more"
+    },
+    {
+      "title": "Operators Overview",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/",
+      "description": "All C# operators explained"
+    }
+  ]
+}

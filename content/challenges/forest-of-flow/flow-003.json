@@ -1,0 +1,94 @@
+{
+  "id": "flow-003",
+  "realm": "forest-of-flow",
+  "title": "The Counting Trees",
+  "story": "You encounter an ancient grove where trees must be counted. The druid says: \"Use a FOR loop to count from 1 to 5, adding each number to 'total'. Start with total at 0.\"",
+  "type": "SpellCraft",
+  "difficulty": 4,
+  "xpReward": 125,
+  "starterCode": "int total = 0;\n// Use a for loop to add numbers 1 through 5 to total\n",
+  "solution": "for (int i = 1; i <= 5; i++) { total += i; }",
+  "testCases": [
+    {
+      "description": "total should equal 15 (1+2+3+4+5)",
+      "assertion": "total == 15"
+    }
+  ],
+  "hints": [
+    "A for loop has three parts: initialization, condition, and increment",
+    "for (int i = 1; i <= 5; i++) loops from 1 to 5",
+    "Use total += i; to add each number to total"
+  ],
+  "concepts": ["for-loop", "iteration", "accumulator"],
+  "readingMaterial": [
+    {
+      "title": "For Statement",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements#the-for-statement",
+      "description": "The classic counting loop"
+    },
+    {
+      "title": "Iteration Statements",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements",
+      "description": "All loop types in C#"
+    }
+  ],
+  "tutorial": {
+    "title": "For Loops: Counting Made Easy",
+    "steps": [
+      {
+        "explanation": "A FOR loop is perfect when you know EXACTLY how many times you want to repeat something.\n\nThink of it like counting: \"For each number from 1 to 10, do this thing.\"",
+        "tip": "Use 'for' when counting. Use 'while' when you don't know how many times to repeat."
+      },
+      {
+        "explanation": "A for loop has THREE parts separated by semicolons:\n\nfor (START; CONDITION; STEP)\n{\n    // code to repeat\n}\n\n- START: Where to begin counting\n- CONDITION: Keep going while this is true\n- STEP: How to count (usually add 1)",
+        "codeExample": "for (int i = 1; i <= 5; i++)\n{\n    // this runs 5 times\n}",
+        "tip": "The variable 'i' is traditional for loop counters. It stands for 'index' or 'iteration'."
+      },
+      {
+        "explanation": "Let's break down: for (int i = 1; i <= 5; i++)\n\n- int i = 1  ->  Create counter 'i', start at 1\n- i <= 5     ->  Keep looping while i is 5 or less\n- i++        ->  After each loop, add 1 to i",
+        "codeExample": "for (int i = 1; i <= 5; i++)",
+        "codeOutput": "Loop runs with i = 1\nLoop runs with i = 2\nLoop runs with i = 3\nLoop runs with i = 4\nLoop runs with i = 5\nLoop stops (6 is NOT <= 5)",
+        "tip": "i++ means i = i + 1. It's a shortcut!"
+      },
+      {
+        "explanation": "To ADD UP numbers, use an ACCUMULATOR - a variable that collects the total.\n\nThe += operator means 'add this to what's already there':\ntotal += i  is the same as  total = total + i",
+        "codeExample": "int total = 0;\ntotal += 5;  // total is now 5\ntotal += 3;  // total is now 8",
+        "tip": "Always start your accumulator at 0 before the loop!"
+      },
+      {
+        "explanation": "Let's trace the complete solution:\n\nStart: total = 0\n\nLoop 1 (i=1): total = 0 + 1 = 1\nLoop 2 (i=2): total = 1 + 2 = 3\nLoop 3 (i=3): total = 3 + 3 = 6\nLoop 4 (i=4): total = 6 + 4 = 10\nLoop 5 (i=5): total = 10 + 5 = 15\n\nFinal total: 15",
+        "codeExample": "int total = 0;\nfor (int i = 1; i <= 5; i++)\n{\n    total += i;\n}",
+        "tip": "Inside the loop, 'i' changes each time. We use its value to add to total!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Let's explore for loops! These are great when you know exactly how many times to repeat something.",
+    "examples": [
+      {
+        "title": "Counting from 1 to 5",
+        "explanation": "The simplest for loop counts from one number to another.\n\nThe three parts:\n- int i = 1 -> start at 1\n- i <= 5 -> keep going while i is 5 or less\n- i++ -> add 1 to i after each loop",
+        "code": "for (int i = 1; i <= 5; i++)\n{\n    Console.WriteLine(\"Count: \" + i);\n}",
+        "expectedOutput": "Count: 1\nCount: 2\nCount: 3\nCount: 4\nCount: 5"
+      },
+      {
+        "title": "Counting by Different Amounts",
+        "explanation": "You can count by any amount! Change i++ to i += 2 to count by twos.\n\nTry changing it to count by 3s or 5s!",
+        "code": "Console.WriteLine(\"Counting by 2s:\");\nfor (int i = 0; i <= 10; i += 2)\n{\n    Console.WriteLine(i);\n}",
+        "expectedOutput": "Counting by 2s:\n0\n2\n4\n6\n8\n10"
+      },
+      {
+        "title": "Adding Numbers Together",
+        "explanation": "Use an ACCUMULATOR variable to build up a total. Start at 0, then add each number.\n\nWatch how 'total' grows: 0+1=1, 1+2=3, 3+3=6...",
+        "code": "int total = 0;\n\nfor (int i = 1; i <= 5; i++)\n{\n    total += i;  // same as: total = total + i\n    Console.WriteLine(\"Added \" + i + \", total is now \" + total);\n}\n\nConsole.WriteLine(\"Final total: \" + total);",
+        "expectedOutput": "Added 1, total is now 1\nAdded 2, total is now 3\nAdded 3, total is now 6\nAdded 4, total is now 10\nAdded 5, total is now 15\nFinal total: 15"
+      },
+      {
+        "title": "Practice: Sum 1 to 5",
+        "explanation": "Now try it yourself! Add up the numbers from 1 to 5.\n\nYou need:\n1. int total = 0; (before the loop)\n2. A for loop from 1 to 5\n3. total += i; (inside the loop)",
+        "code": "int total = 0;\n\n// Write your for loop here to add numbers 1 through 5\n\nConsole.WriteLine(\"Total: \" + total);",
+        "expectedOutput": "Total: 15"
+      }
+    ]
+  }
+}

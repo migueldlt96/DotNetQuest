@@ -1,0 +1,35 @@
+{
+  "id": "flow-001",
+  "realm": "forest-of-flow",
+  "title": "The Crossroads",
+  "story": "You enter the mystical Forest of Flow, where paths branch based on conditions. A wise owl perches above. \"Traveler, you must learn the way of IF. Given a variable 'health' with value 75, create a bool called 'isHealthy' that is true if health is greater than 50.\"",
+  "type": "CodeCompletion",
+  "difficulty": 3,
+  "xpReward": 100,
+  "starterCode": "int health = 75;\n// Create 'isHealthy' - true if health > 50\n",
+  "solution": "bool isHealthy = health > 50;",
+  "testCases": [
+    {
+      "description": "isHealthy should be true",
+      "assertion": "isHealthy == true"
+    }
+  ],
+  "hints": [
+    "Comparison operators like > return a boolean value",
+    "You can assign the result of a comparison directly to a bool",
+    "bool isHealthy = health > 50;"
+  ],
+  "concepts": ["comparison", "boolean", "operators"],
+  "readingMaterial": [
+    {
+      "title": "Comparison Operators",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/comparison-operators",
+      "description": "Greater than, less than, equals and more"
+    },
+    {
+      "title": "Boolean Expressions",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/boolean-logical-operators",
+      "description": "Working with true/false logic"
+    }
+  ]
+}

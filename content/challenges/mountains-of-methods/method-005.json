@@ -1,0 +1,35 @@
+{
+  "id": "method-005",
+  "realm": "mountains-of-methods",
+  "title": "The Recursive Riddle",
+  "story": "At the mountain peak, a sphinx poses a challenge: \"Create a method 'Factorial' that calculates n! recursively. Factorial of 5 is 5 * 4 * 3 * 2 * 1 = 120. Remember: Factorial(0) = 1.\"",
+  "type": "BossBattle",
+  "difficulty": 7,
+  "xpReward": 250,
+  "starterCode": "// Define Factorial(int n) recursively\n// Base case: if n <= 1, return 1\n// Recursive case: return n * Factorial(n - 1)\n\nint result = Factorial(5);",
+  "solution": "int Factorial(int n) { if (n <= 1) return 1; return n * Factorial(n - 1); }",
+  "testCases": [
+    {
+      "description": "Factorial(5) should return 120",
+      "assertion": "result == 120"
+    }
+  ],
+  "hints": [
+    "Recursion means a method calls itself",
+    "You need a base case (n <= 1 returns 1) to stop the recursion",
+    "The recursive case: return n * Factorial(n - 1)"
+  ],
+  "concepts": ["recursion", "factorial", "base-case"],
+  "readingMaterial": [
+    {
+      "title": "Recursion",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods#recursive-methods",
+      "description": "Methods that call themselves"
+    },
+    {
+      "title": "Recursion Tutorial",
+      "url": "https://learn.microsoft.com/en-us/training/modules/csharp-call-methods/",
+      "description": "Learning about method calls"
+    }
+  ]
+}

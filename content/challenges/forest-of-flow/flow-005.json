@@ -1,0 +1,35 @@
+{
+  "id": "flow-005",
+  "realm": "forest-of-flow",
+  "title": "The Ternary Rune",
+  "story": "You find an ancient rune stone. The inscription reads: \"Master the art of the ternary! Given 'score' of 85, set 'grade' to 'Pass' if score >= 60, otherwise 'Fail'. Do this in ONE line using the ternary operator.\"",
+  "type": "SpellCraft",
+  "difficulty": 4,
+  "xpReward": 125,
+  "starterCode": "int score = 85;\n// Use the ternary operator: condition ? valueIfTrue : valueIfFalse\nstring grade = ",
+  "solution": "score >= 60 ? \"Pass\" : \"Fail\";",
+  "testCases": [
+    {
+      "description": "grade should equal \"Pass\"",
+      "assertion": "grade == \"Pass\""
+    }
+  ],
+  "hints": [
+    "The ternary operator is: condition ? trueValue : falseValue",
+    "It's a compact if-else in one expression",
+    "string grade = score >= 60 ? \"Pass\" : \"Fail\";"
+  ],
+  "concepts": ["ternary", "conditional-expression", "one-liner"],
+  "readingMaterial": [
+    {
+      "title": "Conditional Operator",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator",
+      "description": "The ?: ternary operator"
+    },
+    {
+      "title": "Expressions",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/",
+      "description": "C# operators and expressions"
+    }
+  ]
+}

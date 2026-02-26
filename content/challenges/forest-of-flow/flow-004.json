@@ -1,0 +1,103 @@
+{
+  "id": "flow-004",
+  "realm": "forest-of-flow",
+  "title": "The Whispering While",
+  "story": "A mystical fountain whispers numbers. \"Keep subtracting 3 from 'water' (starting at 17) WHILE it remains above 5. How many times can you draw?\" Count the draws in 'draws'.",
+  "type": "SpellCraft",
+  "difficulty": 4,
+  "xpReward": 125,
+  "starterCode": "int water = 17;\nint draws = 0;\n// Use a while loop: subtract 3 from water while water > 5, count draws\n",
+  "solution": "while (water > 5) { water -= 3; draws++; }",
+  "testCases": [
+    {
+      "description": "draws should equal 4",
+      "assertion": "draws == 4"
+    },
+    {
+      "description": "water should equal 5",
+      "assertion": "water == 5"
+    }
+  ],
+  "hints": [
+    "while (condition) { } repeats as long as condition is true",
+    "Subtract with water -= 3 and increment draws with draws++",
+    "17 -> 14 -> 11 -> 8 -> 5 (stops because 5 is not > 5)"
+  ],
+  "concepts": ["while-loop", "iteration", "decrement"],
+  "readingMaterial": [
+    {
+      "title": "While Statement",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements#the-while-statement",
+      "description": "Loop while a condition is true"
+    },
+    {
+      "title": "Increment/Decrement",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/arithmetic-operators#increment-operator-",
+      "description": "The ++ and -- operators"
+    }
+  ],
+  "tutorial": {
+    "title": "While Loops: Repeat Until Done",
+    "steps": [
+      {
+        "explanation": "A WHILE loop is like saying: \"Keep doing this action AS LONG AS something is true.\"\n\nImagine eating cookies from a jar: \"While there are cookies, keep eating.\" You stop when the condition becomes false (no more cookies).",
+        "tip": "The loop checks the condition BEFORE each repetition. If it's false from the start, the loop never runs!"
+      },
+      {
+        "explanation": "The basic structure of a while loop is:\n\nwhile (condition)\n{\n    // code to repeat\n}",
+        "codeExample": "while (condition)\n{\n    // do something\n}",
+        "tip": "The curly braces { } contain everything that repeats. Don't forget them!"
+      },
+      {
+        "explanation": "Let's trace through a simple example. We'll count down from 3:",
+        "codeExample": "int count = 3;\nwhile (count > 0)\n{\n    count = count - 1;\n}",
+        "codeOutput": "count starts at 3\nLoop 1: count becomes 2 (3-1)\nLoop 2: count becomes 1 (2-1)\nLoop 3: count becomes 0 (1-1)\nLoop stops! (0 is NOT > 0)",
+        "tip": "Each time through the loop, we check: Is count > 0? If yes, run the code. If no, stop."
+      },
+      {
+        "explanation": "There's a shortcut for subtracting! Instead of writing:\n  water = water - 3\n\nYou can write:\n  water -= 3\n\nThey mean the same thing: 'take the current value of water and subtract 3 from it'.",
+        "codeExample": "water -= 3;  // same as: water = water - 3;",
+        "tip": "The -= operator is called 'subtract and assign'. There's also += for adding!"
+      },
+      {
+        "explanation": "To count how many times something happens, use a COUNTER variable. The ++ operator adds 1:\n\ndraws++ is the same as draws = draws + 1",
+        "codeExample": "int draws = 0;\ndraws++;  // draws is now 1\ndraws++;  // draws is now 2",
+        "tip": "Always start your counter at 0, then add 1 each time through the loop."
+      },
+      {
+        "explanation": "For this challenge, you need to:\n1. Check if water > 5 (the while condition)\n2. Inside the loop: subtract 3 from water AND add 1 to draws\n\nLet's trace it:\n- Start: water=17, draws=0\n- Loop 1: water=14, draws=1\n- Loop 2: water=11, draws=2\n- Loop 3: water=8, draws=3\n- Loop 4: water=5, draws=4\n- Stop! (5 is NOT greater than 5)",
+        "codeExample": "while (water > 5)\n{\n    water -= 3;\n    draws++;\n}",
+        "tip": "Put both statements (water -= 3 and draws++) inside the curly braces so they both happen each loop."
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Let's explore while loops step by step! Run each example and watch how the loop repeats.",
+    "examples": [
+      {
+        "title": "A Simple Countdown",
+        "explanation": "This while loop counts down from 5 to 1. Each time through the loop, it prints the number and then subtracts 1.\n\nWatch how the loop stops when count reaches 0 (because 0 > 0 is false).",
+        "code": "int count = 5;\n\nwhile (count > 0)\n{\n    Console.WriteLine(count);\n    count = count - 1;\n}\n\nConsole.WriteLine(\"Blast off!\");",
+        "expectedOutput": "5\n4\n3\n2\n1\nBlast off!"
+      },
+      {
+        "title": "Counting How Many Times",
+        "explanation": "Here we use a COUNTER to track how many times the loop runs. The counter starts at 0 and goes up by 1 each time.\n\nNotice: loops++ is a shortcut for loops = loops + 1",
+        "code": "int number = 10;\nint loops = 0;\n\nwhile (number > 0)\n{\n    number = number - 3;\n    loops++;\n    Console.WriteLine(\"Loop \" + loops + \": number is now \" + number);\n}\n\nConsole.WriteLine(\"Total loops: \" + loops);",
+        "expectedOutput": "Loop 1: number is now 7\nLoop 2: number is now 4\nLoop 3: number is now 1\nLoop 4: number is now -2\nTotal loops: 4"
+      },
+      {
+        "title": "The -= Shortcut",
+        "explanation": "Instead of writing 'water = water - 3', you can use the shortcut 'water -= 3'. They do exactly the same thing!\n\nTry changing -= 3 to -= 5 and see how it affects the result.",
+        "code": "int water = 20;\nint draws = 0;\n\nwhile (water >= 5)\n{\n    water -= 5;  // same as: water = water - 5\n    draws++;     // same as: draws = draws + 1\n    Console.WriteLine(\"Drew water. Remaining: \" + water);\n}\n\nConsole.WriteLine(\"Total draws: \" + draws);",
+        "expectedOutput": "Drew water. Remaining: 15\nDrew water. Remaining: 10\nDrew water. Remaining: 5\nDrew water. Remaining: 0\nTotal draws: 4"
+      },
+      {
+        "title": "Practice: The Challenge Setup",
+        "explanation": "This is very similar to the actual challenge! We start with water=17 and subtract 3 each time WHILE water > 5.\n\nTrace through it: 17->14->11->8->5->STOP (5 is not > 5)\n\nModify this code to match what you'll need!",
+        "code": "int water = 17;\nint draws = 0;\n\n// Your while loop goes here:\n// while water is greater than 5,\n// subtract 3 from water and add 1 to draws\n\nConsole.WriteLine(\"Final water: \" + water);\nConsole.WriteLine(\"Total draws: \" + draws);",
+        "expectedOutput": "Final water: 5\nTotal draws: 4"
+      }
+    ]
+  }
+}

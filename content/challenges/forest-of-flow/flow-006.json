@@ -1,0 +1,35 @@
+{
+  "id": "flow-006",
+  "realm": "forest-of-flow",
+  "title": "The Switch Guardian",
+  "story": "A stone golem blocks the forest exit. \"Prove you know the SWITCH! Given 'dayNumber' of 3, set 'dayName' to the day of the week (1=Monday, 2=Tuesday, 3=Wednesday, etc.)\"",
+  "type": "SpellCraft",
+  "difficulty": 5,
+  "xpReward": 150,
+  "starterCode": "int dayNumber = 3;\nstring dayName;\n// Use a switch statement to set dayName\n",
+  "solution": "switch (dayNumber) { case 1: dayName = \"Monday\"; break; case 2: dayName = \"Tuesday\"; break; case 3: dayName = \"Wednesday\"; break; default: dayName = \"Unknown\"; break; }",
+  "testCases": [
+    {
+      "description": "dayName should equal \"Wednesday\"",
+      "assertion": "dayName == \"Wednesday\""
+    }
+  ],
+  "hints": [
+    "switch (variable) { case value: ... break; }",
+    "Each case handles one possible value",
+    "Don't forget the break; after each case!"
+  ],
+  "concepts": ["switch", "case", "pattern-matching"],
+  "readingMaterial": [
+    {
+      "title": "Switch Statement",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/selection-statements#the-switch-statement",
+      "description": "Multi-way branching with switch"
+    },
+    {
+      "title": "Pattern Matching",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching",
+      "description": "Modern pattern matching in C#"
+    }
+  ]
+}

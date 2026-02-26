@@ -1,0 +1,35 @@
+{
+  "id": "var-005",
+  "realm": "valley-of-variables",
+  "title": "The Guardian's Gate",
+  "story": "The gate guardian blocks your path. \"Only those who can wield the Boolean may pass! Create a variable called 'gateOpen' and set it to true to prove your worth.\"",
+  "type": "CodeCompletion",
+  "difficulty": 2,
+  "xpReward": 75,
+  "starterCode": "// Declare a bool variable called 'gateOpen' and set it to true\n",
+  "solution": "bool gateOpen = true;",
+  "testCases": [
+    {
+      "description": "gateOpen should be true",
+      "assertion": "gateOpen == true"
+    }
+  ],
+  "hints": [
+    "Boolean values are either 'true' or 'false'",
+    "The bool type stores true/false values",
+    "bool gateOpen = true;"
+  ],
+  "concepts": ["variables", "boolean", "true/false"],
+  "readingMaterial": [
+    {
+      "title": "Boolean Type",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool",
+      "description": "The bool type for true/false values"
+    },
+    {
+      "title": "Boolean Operators",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/boolean-logical-operators",
+      "description": "AND, OR, NOT and other logical operators"
+    }
+  ]
+}

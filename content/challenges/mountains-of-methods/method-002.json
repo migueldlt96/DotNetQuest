@@ -1,0 +1,35 @@
+{
+  "id": "method-002",
+  "realm": "mountains-of-methods",
+  "title": "The Parameterized Spell",
+  "story": "The hermit continues: \"Now create a spell that accepts input! Write a method 'Double' that takes an int parameter 'n' and returns n multiplied by 2.\"",
+  "type": "SpellCraft",
+  "difficulty": 5,
+  "xpReward": 150,
+  "starterCode": "// Define a method Double(int n) that returns n * 2\n\nint result = Double(21);",
+  "solution": "int Double(int n) { return n * 2; }",
+  "testCases": [
+    {
+      "description": "Double(21) should return 42",
+      "assertion": "result == 42"
+    }
+  ],
+  "hints": [
+    "Parameters go inside the parentheses: MethodName(type paramName)",
+    "Return the calculation directly",
+    "int Double(int n) { return n * 2; }"
+  ],
+  "concepts": ["methods", "parameters", "return"],
+  "readingMaterial": [
+    {
+      "title": "Method Parameters",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/passing-parameters",
+      "description": "Passing data to methods"
+    },
+    {
+      "title": "Return Values",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods#return-values",
+      "description": "Getting data back from methods"
+    }
+  ]
+}

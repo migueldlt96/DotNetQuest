@@ -1,0 +1,35 @@
+{
+  "id": "method-004",
+  "realm": "mountains-of-methods",
+  "title": "The Expression Body",
+  "story": "\"There is an ancient shorthand for simple spells! Rewrite your Add method using an expression body (=>) instead of curly braces.\"",
+  "type": "SpellCraft",
+  "difficulty": 6,
+  "xpReward": 175,
+  "starterCode": "// Define Add using expression body syntax: returnType Name(params) => expression;\n\nint result = Add(17, 25);",
+  "solution": "int Add(int a, int b) => a + b;",
+  "testCases": [
+    {
+      "description": "Add(17, 25) should return 42",
+      "assertion": "result == 42"
+    }
+  ],
+  "hints": [
+    "Expression body uses => instead of { return ... }",
+    "It's a shorthand for simple one-expression methods",
+    "int Add(int a, int b) => a + b;"
+  ],
+  "concepts": ["expression-body", "lambda", "shorthand"],
+  "readingMaterial": [
+    {
+      "title": "Expression Body",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members",
+      "description": "Concise syntax for simple members"
+    },
+    {
+      "title": "Lambda Expressions",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions",
+      "description": "Anonymous functions and lambdas"
+    }
+  ]
+}

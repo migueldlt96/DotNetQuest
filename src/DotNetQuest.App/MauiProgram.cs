@@ -31,6 +31,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<GameStateService>();
         builder.Services.AddSingleton<CodeCompiler>();
         builder.Services.AddSingleton<EditorStateService>();
+        builder.Services.AddSingleton<ChallengeLoader>();
 
         // Register ViewModels
         builder.Services.AddTransient<TitleViewModel>();

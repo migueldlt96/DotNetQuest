@@ -1,0 +1,35 @@
+{
+  "id": "method-001",
+  "realm": "mountains-of-methods",
+  "title": "The First Incantation",
+  "story": "You ascend into the Mountains of Methods. A hermit mage greets you: \"Here we learn to create reusable spells! Write a method called 'GetGreeting' that takes no parameters and returns the string 'Hello, Adventurer!'\"",
+  "type": "SpellCraft",
+  "difficulty": 5,
+  "xpReward": 150,
+  "starterCode": "// Define a method that returns \"Hello, Adventurer!\"\n\nstring result = GetGreeting();",
+  "solution": "string GetGreeting() { return \"Hello, Adventurer!\"; }",
+  "testCases": [
+    {
+      "description": "GetGreeting() should return \"Hello, Adventurer!\"",
+      "assertion": "result == \"Hello, Adventurer!\""
+    }
+  ],
+  "hints": [
+    "Methods are defined: returnType MethodName() { }",
+    "Use 'return' to send a value back",
+    "string GetGreeting() { return \"Hello, Adventurer!\"; }"
+  ],
+  "concepts": ["methods", "return", "functions"],
+  "readingMaterial": [
+    {
+      "title": "Methods",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods",
+      "description": "Creating and using methods"
+    },
+    {
+      "title": "Local Functions",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/local-functions",
+      "description": "Methods inside methods"
+    }
+  ]
+}
