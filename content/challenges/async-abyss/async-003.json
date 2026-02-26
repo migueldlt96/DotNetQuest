@@ -1,0 +1,88 @@
+{
+  "id": "async-003",
+  "realm": "async-abyss",
+  "title": "The Transformation Depths",
+  "story": "The abyss transforms values across time. The guardian instructs: \"Create an async method 'DoubleAfterDelayAsync' that takes an int, waits 25ms, then returns the number doubled.\"",
+  "type": "SpellCraft",
+  "difficulty": 7,
+  "xpReward": 200,
+  "starterCode": "// Create async method that takes int, delays 25ms, returns n * 2\n\nint result = await DoubleAfterDelayAsync(21);",
+  "solution": "async Task<int> DoubleAfterDelayAsync(int n) { await Task.Delay(25); return n * 2; }",
+  "testCases": [
+    {
+      "description": "result should equal 42",
+      "assertion": "result == 42"
+    }
+  ],
+  "hints": [
+    "The method takes an int parameter and returns Task<int>",
+    "Delay first, then return the calculation",
+    "async Task<int> DoubleAfterDelayAsync(int n) { await Task.Delay(25); return n * 2; }"
+  ],
+  "concepts": ["async-parameters", "Task<T>", "return-values"],
+  "readingMaterial": [
+    {
+      "title": "Async Return Types",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/async-return-types",
+      "description": "Understanding async return types"
+    }
+  ],
+  "tutorial": {
+    "title": "Async with Parameters and Returns",
+    "steps": [
+      {
+        "explanation": "Async methods can take parameters just like regular methods! The async/await just handles the TIMING, not the data.",
+        "tip": "Parameters work exactly the same in async methods - nothing special needed."
+      },
+      {
+        "explanation": "When an async method returns a VALUE, use Task<T>:\n\n- Task<int> for returning int\n- Task<string> for returning string\n- Task<bool> for returning bool\n\nThe await 'unwraps' the Task to get the actual value.",
+        "codeExample": "async Task<int> GetNumberAsync()\n{\n    await Task.Delay(100);\n    return 42;  // Returns int, wrapped in Task<int>\n}\n\nint number = await GetNumberAsync();  // await unwraps it",
+        "tip": "Inside the method, just 'return 42'. The compiler wraps it in Task<int> for you."
+      },
+      {
+        "explanation": "Combining parameters with async:\n\nasync Task<int> DoubleAsync(int n)\n{\n    await Task.Delay(100);\n    return n * 2;  // Use the parameter!\n}",
+        "codeExample": "async Task<int> DoubleAsync(int n)\n{\n    await Task.Delay(100);\n    return n * 2;\n}\n\nint result = await DoubleAsync(21);  // result = 42",
+        "tip": "The parameter 'n' is available throughout the method, before and after await."
+      },
+      {
+        "explanation": "The await can happen ANYWHERE in the method:\n\n- At the start (wait, then compute)\n- In the middle (compute, wait, compute more)\n- At the end (compute, then wait)\n\nFor this challenge: wait first, then return.",
+        "codeExample": "async Task<int> ProcessAsync(int n)\n{\n    await Task.Delay(25);  // Wait first\n    return n * 2;          // Then compute and return\n}",
+        "tip": "The delay simulates real-world scenarios like waiting for a database or API."
+      },
+      {
+        "explanation": "For this challenge:\n\n1. Method takes int n\n2. Returns Task<int>\n3. Awaits Task.Delay(25)\n4. Returns n * 2",
+        "codeExample": "async Task<int> DoubleAfterDelayAsync(int n)\n{\n    await Task.Delay(25);\n    return n * 2;\n}",
+        "tip": "DoubleAfterDelayAsync(21) will wait 25ms, then return 42."
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Async methods can take parameters and return computed values, just with some waiting in between!",
+    "examples": [
+      {
+        "title": "Async with One Parameter",
+        "explanation": "This method takes a number, waits a bit, then returns it doubled. Simple transformation with delay!",
+        "code": "async Task<int> DoubleAsync(int n)\n{\n    await Task.Delay(25);\n    return n * 2;\n}\n\nint result = await DoubleAsync(21);\nConsole.WriteLine(\"21 doubled = \" + result);",
+        "expectedOutput": "21 doubled = 42"
+      },
+      {
+        "title": "Async with Multiple Parameters",
+        "explanation": "Async methods can take multiple parameters. Here we add two numbers after a delay.",
+        "code": "async Task<int> AddAfterDelayAsync(int a, int b)\n{\n    await Task.Delay(25);\n    return a + b;\n}\n\nint sum = await AddAfterDelayAsync(17, 25);\nConsole.WriteLine(\"17 + 25 = \" + sum);",
+        "expectedOutput": "17 + 25 = 42"
+      },
+      {
+        "title": "Chaining Async Calls",
+        "explanation": "You can use the result of one async call in another! Each await waits for its operation.",
+        "code": "async Task<int> DoubleAsync(int n)\n{\n    await Task.Delay(10);\n    return n * 2;\n}\n\nint step1 = await DoubleAsync(5);   // 10\nint step2 = await DoubleAsync(step1);  // 20\nint step3 = await DoubleAsync(step2);  // 40\n\nConsole.WriteLine(\"5 -> \" + step1 + \" -> \" + step2 + \" -> \" + step3);",
+        "expectedOutput": "5 -> 10 -> 20 -> 40"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create DoubleAfterDelayAsync that:\n1. Takes int n\n2. Awaits Task.Delay(25)\n3. Returns n * 2",
+        "code": "// Define your DoubleAfterDelayAsync method here\n\nint result = await DoubleAfterDelayAsync(21);\nConsole.WriteLine(\"Result: \" + result);",
+        "expectedOutput": "Result: 42"
+      }
+    ]
+  }
+}

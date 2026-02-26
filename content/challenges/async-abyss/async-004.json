@@ -1,0 +1,93 @@
+{
+  "id": "async-004",
+  "realm": "async-abyss",
+  "title": "The Parallel Caverns",
+  "story": "In the deepest caverns, multiple paths can be traveled simultaneously! The guardian reveals: \"Create a method 'GetSumAsync' that calls GetNumberAsync(10), GetNumberAsync(20), and GetNumberAsync(12) IN PARALLEL using Task.WhenAll, then returns their sum.\"",
+  "type": "SpellCraft",
+  "difficulty": 8,
+  "xpReward": 225,
+  "starterCode": "async Task<int> GetNumberAsync(int n) { await Task.Delay(10); return n; }\n\n// Create GetSumAsync that runs 3 calls in parallel and sums them\n\nint sum = await GetSumAsync();",
+  "solution": "async Task<int> GetSumAsync() { var tasks = new[] { GetNumberAsync(10), GetNumberAsync(20), GetNumberAsync(12) }; int[] results = await Task.WhenAll(tasks); return results[0] + results[1] + results[2]; }",
+  "testCases": [
+    {
+      "description": "sum should equal 42 (10 + 20 + 12)",
+      "assertion": "sum == 42"
+    }
+  ],
+  "hints": [
+    "Start all tasks without await first, then await Task.WhenAll",
+    "Task.WhenAll returns an array of results",
+    "var tasks = new[] { GetNumberAsync(10), GetNumberAsync(20), GetNumberAsync(12) };"
+  ],
+  "concepts": ["Task.WhenAll", "parallel-operations", "concurrent-async"],
+  "readingMaterial": [
+    {
+      "title": "Task.WhenAll",
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task.whenall",
+      "description": "Running tasks in parallel"
+    },
+    {
+      "title": "Async Patterns",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/",
+      "description": "Common async patterns"
+    }
+  ],
+  "tutorial": {
+    "title": "Task.WhenAll: Parallel Power",
+    "steps": [
+      {
+        "explanation": "So far, we've awaited tasks ONE AT A TIME (sequentially). But what if tasks are INDEPENDENT?\n\nRunning them in PARALLEL is faster! Three 100ms tasks take 100ms total, not 300ms.",
+        "tip": "Parallel = multiple things happening at the same time. Sequential = one after another."
+      },
+      {
+        "explanation": "Sequential vs Parallel:\n\n// Sequential (slow - 300ms total):\nvar a = await GetDataAsync();  // 100ms\nvar b = await GetDataAsync();  // 100ms\nvar c = await GetDataAsync();  // 100ms\n\n// Parallel (fast - 100ms total):\nvar tasks = new[] { GetDataAsync(), GetDataAsync(), GetDataAsync() };\nvar results = await Task.WhenAll(tasks);",
+        "codeExample": "// Start all at once, wait for all:\nvar task1 = DoWorkAsync();  // Started!\nvar task2 = DoWorkAsync();  // Started!\nvar task3 = DoWorkAsync();  // Started!\n\nawait Task.WhenAll(task1, task2, task3);  // Wait for ALL",
+        "tip": "Notice: no 'await' when starting the tasks - just when we want to wait for completion."
+      },
+      {
+        "explanation": "Task.WhenAll waits for ALL tasks to complete, then returns their results as an array.\n\nTask.WhenAll(Task<int>, Task<int>, Task<int>) → Task<int[]>",
+        "codeExample": "async Task<int> GetNumberAsync(int n)\n{\n    await Task.Delay(100);\n    return n;\n}\n\n// Returns int[] with results in order:\nint[] results = await Task.WhenAll(\n    GetNumberAsync(10),\n    GetNumberAsync(20),\n    GetNumberAsync(12)\n);\n// results = [10, 20, 12]",
+        "tip": "Results are in the same order as the tasks you passed in."
+      },
+      {
+        "explanation": "You can also create an array of tasks first:\n\nvar tasks = new[]\n{\n    GetNumberAsync(10),\n    GetNumberAsync(20),\n    GetNumberAsync(12)\n};\n\nint[] results = await Task.WhenAll(tasks);",
+        "codeExample": "var tasks = new[]\n{\n    GetNumberAsync(10),\n    GetNumberAsync(20),\n    GetNumberAsync(12)\n};\n\nint[] results = await Task.WhenAll(tasks);\nint sum = results[0] + results[1] + results[2];  // 42",
+        "tip": "Creating the task array starts all tasks running immediately!"
+      },
+      {
+        "explanation": "For this challenge:\n\n1. Create array of 3 GetNumberAsync calls (10, 20, 12)\n2. await Task.WhenAll to get results array\n3. Sum the results and return",
+        "codeExample": "async Task<int> GetSumAsync()\n{\n    var tasks = new[]\n    {\n        GetNumberAsync(10),\n        GetNumberAsync(20),\n        GetNumberAsync(12)\n    };\n    int[] results = await Task.WhenAll(tasks);\n    return results[0] + results[1] + results[2];\n}",
+        "tip": "All three calls run simultaneously - much faster than sequential!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Task.WhenAll runs multiple operations in parallel and waits for all to complete. Much faster than sequential!",
+    "examples": [
+      {
+        "title": "Sequential vs Parallel",
+        "explanation": "Compare the time difference! Sequential runs one after another, parallel runs all at once.",
+        "code": "async Task<int> SlowGetNumber(int n)\n{\n    await Task.Delay(50);\n    return n;\n}\n\n// Sequential - each waits for the previous\nvar start1 = DateTime.Now;\nint a = await SlowGetNumber(1);\nint b = await SlowGetNumber(2);\nint c = await SlowGetNumber(3);\nConsole.WriteLine(\"Sequential: \" + (DateTime.Now - start1).TotalMilliseconds + \"ms\");\n\n// Parallel - all run at once\nvar start2 = DateTime.Now;\nvar results = await Task.WhenAll(\n    SlowGetNumber(1),\n    SlowGetNumber(2),\n    SlowGetNumber(3)\n);\nConsole.WriteLine(\"Parallel: \" + (DateTime.Now - start2).TotalMilliseconds + \"ms\");",
+        "expectedOutput": "Sequential: ~150ms\nParallel: ~50ms"
+      },
+      {
+        "title": "Getting Results from WhenAll",
+        "explanation": "Task.WhenAll returns an array of results in the same order as the tasks.",
+        "code": "async Task<string> GetDataAsync(string id)\n{\n    await Task.Delay(10);\n    return \"Data-\" + id;\n}\n\nstring[] results = await Task.WhenAll(\n    GetDataAsync(\"A\"),\n    GetDataAsync(\"B\"),\n    GetDataAsync(\"C\")\n);\n\nforeach (var result in results)\n{\n    Console.WriteLine(result);\n}",
+        "expectedOutput": "Data-A\nData-B\nData-C"
+      },
+      {
+        "title": "Summing Parallel Results",
+        "explanation": "Get numbers in parallel, then sum them. This is exactly what the challenge needs!",
+        "code": "async Task<int> GetNumberAsync(int n)\n{\n    await Task.Delay(10);\n    return n;\n}\n\nvar tasks = new[]\n{\n    GetNumberAsync(10),\n    GetNumberAsync(20),\n    GetNumberAsync(12)\n};\n\nint[] numbers = await Task.WhenAll(tasks);\nint sum = numbers[0] + numbers[1] + numbers[2];\n\nConsole.WriteLine(\"Sum: \" + sum);",
+        "expectedOutput": "Sum: 42"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create GetSumAsync that:\n1. Calls GetNumberAsync for 10, 20, and 12 in parallel\n2. Uses Task.WhenAll to wait for all\n3. Returns the sum of results",
+        "code": "async Task<int> GetNumberAsync(int n) { await Task.Delay(10); return n; }\n\n// Define your GetSumAsync method here\n\nint sum = await GetSumAsync();\nConsole.WriteLine(\"Sum: \" + sum);",
+        "expectedOutput": "Sum: 42"
+      }
+    ]
+  }
+}

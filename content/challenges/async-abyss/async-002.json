@@ -1,0 +1,93 @@
+{
+  "id": "async-002",
+  "realm": "async-abyss",
+  "title": "The Delayed Chamber",
+  "story": "Deeper in the abyss, time itself slows. The guardian challenges: \"Create an async method 'WaitAndReturnAsync' that waits for 50 milliseconds using Task.Delay, then returns the string 'Patience rewarded!'\"",
+  "type": "SpellCraft",
+  "difficulty": 7,
+  "xpReward": 200,
+  "starterCode": "// Create async method that delays 50ms then returns \"Patience rewarded!\"\n\nstring result = await WaitAndReturnAsync();",
+  "solution": "async Task<string> WaitAndReturnAsync() { await Task.Delay(50); return \"Patience rewarded!\"; }",
+  "testCases": [
+    {
+      "description": "result should equal \"Patience rewarded!\"",
+      "assertion": "result == \"Patience rewarded!\""
+    }
+  ],
+  "hints": [
+    "Use Task.Delay(milliseconds) to wait asynchronously",
+    "After the delay, simply return the string",
+    "async Task<string> WaitAndReturnAsync() { await Task.Delay(50); return \"...\"; }"
+  ],
+  "concepts": ["Task.Delay", "async-operations", "awaiting"],
+  "readingMaterial": [
+    {
+      "title": "Task.Delay",
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task.delay",
+      "description": "Creating time-based delays"
+    },
+    {
+      "title": "Async Patterns",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/task-asynchronous-programming-model",
+      "description": "Task-based async programming"
+    }
+  ],
+  "tutorial": {
+    "title": "Task.Delay: Async Waiting",
+    "steps": [
+      {
+        "explanation": "Sometimes you need to WAIT - for rate limiting, retries, animations, or simulating slow operations.\n\nTask.Delay is the async way to wait without freezing your program.",
+        "tip": "Never use Thread.Sleep in async code - it blocks! Always use Task.Delay instead."
+      },
+      {
+        "explanation": "Task.Delay takes milliseconds:\n\nawait Task.Delay(1000);  // Wait 1 second\nawait Task.Delay(500);   // Wait half a second\nawait Task.Delay(50);    // Wait 50 milliseconds",
+        "codeExample": "async Task WaitAsync()\n{\n    Console.WriteLine(\"Starting...\");\n    await Task.Delay(1000);  // 1 second\n    Console.WriteLine(\"Done!\");\n}",
+        "tip": "1000 milliseconds = 1 second. 50 milliseconds is very quick!"
+      },
+      {
+        "explanation": "During Task.Delay, your program can do OTHER work. That's the power of async!\n\nThe thread isn't blocked - it's free to handle other requests.",
+        "codeExample": "// This doesn't freeze your app:\nawait Task.Delay(5000);  // 5 second wait\n\n// This WOULD freeze your app (don't do this!):\n// Thread.Sleep(5000);  // BAD in async code!",
+        "tip": "In a web server, blocked threads can't handle other users. Async keeps things responsive!"
+      },
+      {
+        "explanation": "You can do work BEFORE and AFTER the delay:\n\nasync Task<string> Process()\n{\n    // Do something first\n    await Task.Delay(100);\n    // Do something after\n    return \"Done!\";\n}",
+        "codeExample": "async Task<string> WaitAndReturnAsync()\n{\n    Console.WriteLine(\"Waiting...\");\n    await Task.Delay(50);\n    Console.WriteLine(\"Wait complete!\");\n    return \"Patience rewarded!\";\n}",
+        "tip": "Code after 'await' runs AFTER the awaited operation completes."
+      },
+      {
+        "explanation": "For this challenge:\n\n1. Create async method returning Task<string>\n2. await Task.Delay(50) to wait 50ms\n3. Return the string \"Patience rewarded!\"",
+        "codeExample": "async Task<string> WaitAndReturnAsync()\n{\n    await Task.Delay(50);\n    return \"Patience rewarded!\";\n}",
+        "tip": "Simple and clean - delay, then return!"
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Task.Delay lets you wait asynchronously without blocking. Let's explore timing in async code!",
+    "examples": [
+      {
+        "title": "Basic Delay",
+        "explanation": "Task.Delay waits the specified milliseconds without blocking. Other code could run during this time (in a real app).",
+        "code": "async Task WaitDemo()\n{\n    Console.WriteLine(\"Start: \" + DateTime.Now.ToString(\"ss.fff\"));\n    await Task.Delay(100);  // 100ms = 0.1 seconds\n    Console.WriteLine(\"End:   \" + DateTime.Now.ToString(\"ss.fff\"));\n}\n\nawait WaitDemo();",
+        "expectedOutput": "Start: [time]\nEnd:   [time + ~100ms]"
+      },
+      {
+        "title": "Sequential Delays",
+        "explanation": "Multiple delays add up. Each await waits for that delay to complete before continuing.",
+        "code": "async Task CountdownAsync()\n{\n    Console.WriteLine(\"3...\");\n    await Task.Delay(50);\n    Console.WriteLine(\"2...\");\n    await Task.Delay(50);\n    Console.WriteLine(\"1...\");\n    await Task.Delay(50);\n    Console.WriteLine(\"Go!\");\n}\n\nawait CountdownAsync();",
+        "expectedOutput": "3...\n2...\n1...\nGo!"
+      },
+      {
+        "title": "Delay Then Return",
+        "explanation": "A common pattern: wait for something, then return a result. The caller awaits and gets the value.",
+        "code": "async Task<string> SimulateNetworkCall()\n{\n    Console.WriteLine(\"Calling server...\");\n    await Task.Delay(75);  // Simulate network latency\n    Console.WriteLine(\"Response received!\");\n    return \"Data from server\";\n}\n\nstring data = await SimulateNetworkCall();\nConsole.WriteLine(\"Got: \" + data);",
+        "expectedOutput": "Calling server...\nResponse received!\nGot: Data from server"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create WaitAndReturnAsync that:\n1. Waits 50 milliseconds (await Task.Delay(50))\n2. Returns \"Patience rewarded!\"",
+        "code": "// Define your WaitAndReturnAsync method here\n\nstring result = await WaitAndReturnAsync();\nConsole.WriteLine(result);",
+        "expectedOutput": "Patience rewarded!"
+      }
+    ]
+  }
+}

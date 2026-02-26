@@ -1,0 +1,93 @@
+{
+  "id": "async-005",
+  "realm": "async-abyss",
+  "title": "The Error Vortex",
+  "story": "At the heart of the Abyss, a vortex of errors awaits! The final guardian commands: \"Create 'SafeFetchAsync' that calls the dangerous 'FetchDataAsync'. If it throws an exception, catch it and return 'Error occurred' instead. Handle the chaos!\"",
+  "type": "BossBattle",
+  "difficulty": 9,
+  "xpReward": 300,
+  "starterCode": "async Task<string> FetchDataAsync(bool shouldFail)\n{\n    await Task.Delay(10);\n    if (shouldFail) throw new Exception(\"Network error!\");\n    return \"Data retrieved!\";\n}\n\n// Create SafeFetchAsync that catches exceptions and returns \"Error occurred\"\n\nstring result = await SafeFetchAsync(true);",
+  "solution": "async Task<string> SafeFetchAsync(bool shouldFail) { try { return await FetchDataAsync(shouldFail); } catch { return \"Error occurred\"; } }",
+  "testCases": [
+    {
+      "description": "result should equal \"Error occurred\" when shouldFail is true",
+      "assertion": "result == \"Error occurred\""
+    }
+  ],
+  "hints": [
+    "Use try/catch around the await",
+    "Catch any exception and return the fallback string",
+    "try { return await FetchDataAsync(shouldFail); } catch { return \"Error occurred\"; }"
+  ],
+  "concepts": ["error-handling", "try-catch", "async-exceptions"],
+  "readingMaterial": [
+    {
+      "title": "Async Exception Handling",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/",
+      "description": "Handling errors in async code"
+    },
+    {
+      "title": "Try-Catch",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/try-catch",
+      "description": "Exception handling basics"
+    }
+  ],
+  "tutorial": {
+    "title": "Error Handling: Taming Async Chaos",
+    "steps": [
+      {
+        "explanation": "Async operations can FAIL:\n- Network timeouts\n- Server errors\n- Invalid data\n\nExceptions in async code work with try/catch, just like synchronous code!",
+        "tip": "Always expect things to go wrong, especially with network/file/database operations."
+      },
+      {
+        "explanation": "When an awaited task throws an exception, it propagates UP just like normal exceptions:\n\nasync Task DoWorkAsync()\n{\n    await SomethingThatFails();  // Exception thrown here!\n}  // Exception propagates to caller",
+        "codeExample": "async Task FailingMethodAsync()\n{\n    await Task.Delay(100);\n    throw new Exception(\"Something went wrong!\");\n}\n\n// Calling without try/catch - exception propagates!\nawait FailingMethodAsync();  // BOOM!",
+        "tip": "Unhandled exceptions in async code will crash your app, just like sync code."
+      },
+      {
+        "explanation": "Wrap the await in try/catch to handle errors:\n\ntry\n{\n    var result = await RiskyOperationAsync();\n    // Success path\n}\ncatch (Exception ex)\n{\n    // Error path\n}",
+        "codeExample": "async Task<string> SafeCallAsync()\n{\n    try\n    {\n        return await RiskyOperationAsync();\n    }\n    catch (Exception ex)\n    {\n        Console.WriteLine(\"Error: \" + ex.Message);\n        return \"default value\";\n    }\n}",
+        "tip": "The catch block runs if ANYTHING goes wrong in the try block."
+      },
+      {
+        "explanation": "You can catch specific exception types:\n\ncatch (HttpRequestException)\n{\n    // Network error\n}\ncatch (TimeoutException)\n{\n    // Took too long\n}\ncatch (Exception)\n{\n    // Any other error\n}",
+        "codeExample": "try\n{\n    return await FetchFromNetworkAsync();\n}\ncatch (TimeoutException)\n{\n    return \"Request timed out\";\n}\ncatch (Exception)\n{\n    return \"Unknown error\";\n}",
+        "tip": "More specific catches should come BEFORE more general ones."
+      },
+      {
+        "explanation": "For this challenge:\n\n1. Create SafeFetchAsync that calls FetchDataAsync\n2. Wrap the call in try/catch\n3. If exception, return \"Error occurred\"\n4. If success, return the result",
+        "codeExample": "async Task<string> SafeFetchAsync(bool shouldFail)\n{\n    try\n    {\n        return await FetchDataAsync(shouldFail);\n    }\n    catch\n    {\n        return \"Error occurred\";\n    }\n}",
+        "tip": "catch without (Exception ex) catches everything - fine when you don't need the exception details."
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Errors happen in async code too! Try/catch works the same way - wrap the await and handle failures gracefully.",
+    "examples": [
+      {
+        "title": "Catching Async Exceptions",
+        "explanation": "When an awaited task throws, the exception can be caught with try/catch. The catch block handles the error.",
+        "code": "async Task<string> MightFailAsync(bool fail)\n{\n    await Task.Delay(10);\n    if (fail)\n        throw new Exception(\"It failed!\");\n    return \"Success!\";\n}\n\ntry\n{\n    string result = await MightFailAsync(true);\n    Console.WriteLine(result);\n}\ncatch (Exception ex)\n{\n    Console.WriteLine(\"Caught: \" + ex.Message);\n}",
+        "expectedOutput": "Caught: It failed!"
+      },
+      {
+        "title": "Providing Fallback Values",
+        "explanation": "Instead of crashing, return a default value when an error occurs. This keeps your app running!",
+        "code": "async Task<int> GetNumberOrDefaultAsync(bool shouldFail)\n{\n    try\n    {\n        await Task.Delay(10);\n        if (shouldFail)\n            throw new Exception(\"Network error\");\n        return 42;\n    }\n    catch\n    {\n        return -1;  // Fallback value\n    }\n}\n\nint good = await GetNumberOrDefaultAsync(false);\nint bad = await GetNumberOrDefaultAsync(true);\n\nConsole.WriteLine(\"Success case: \" + good);\nConsole.WriteLine(\"Failure case: \" + bad);",
+        "expectedOutput": "Success case: 42\nFailure case: -1"
+      },
+      {
+        "title": "Safe Wrapper Pattern",
+        "explanation": "A common pattern: create a 'safe' wrapper method that handles errors for a risky operation.",
+        "code": "async Task<string> RiskyFetchAsync()\n{\n    await Task.Delay(10);\n    throw new Exception(\"Server unreachable!\");\n}\n\nasync Task<string> SafeFetchAsync()\n{\n    try\n    {\n        return await RiskyFetchAsync();\n    }\n    catch (Exception ex)\n    {\n        Console.WriteLine(\"Error handled: \" + ex.Message);\n        return \"Fallback data\";\n    }\n}\n\nstring data = await SafeFetchAsync();\nConsole.WriteLine(\"Got: \" + data);",
+        "expectedOutput": "Error handled: Server unreachable!\nGot: Fallback data"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create SafeFetchAsync that:\n1. Calls FetchDataAsync(shouldFail)\n2. Catches any exception\n3. Returns \"Error occurred\" on failure\n4. Returns the data on success",
+        "code": "async Task<string> FetchDataAsync(bool shouldFail)\n{\n    await Task.Delay(10);\n    if (shouldFail) throw new Exception(\"Network error!\");\n    return \"Data retrieved!\";\n}\n\n// Define your SafeFetchAsync method here\n\nstring result = await SafeFetchAsync(true);\nConsole.WriteLine(result);",
+        "expectedOutput": "Error occurred"
+      }
+    ]
+  }
+}

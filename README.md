@@ -17,8 +17,10 @@ A gamified C# learning application built with .NET MAUI. Learn programming throu
 | Valley of Variables | Variables, types, assignment | 5 |
 | Forest of Flow | Conditionals, loops, operators | 6 |
 | Mountains of Methods | Functions, parameters, recursion | 5 |
-| Castle of Classes | OOP (coming soon) | - |
-| The Async Abyss | Async/await (coming soon) | - |
+| Castle of Classes | OOP, inheritance, encapsulation | 5 |
+| The Async Abyss | Async/await, Task, parallel ops | 5 |
+
+**Total: 26 challenges** across 5 realms
 
 ## Tech Stack
 

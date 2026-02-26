@@ -1,0 +1,93 @@
+{
+  "id": "async-001",
+  "realm": "async-abyss",
+  "title": "The Waiting Pool",
+  "story": "You descend into the Async Abyss, where time flows differently. An ancient guardian speaks: \"Here, we learn to WAIT without BLOCKING. Create an async method 'GetMessageAsync' that returns the string 'Hello from the Abyss!' using Task.FromResult.\"",
+  "type": "SpellCraft",
+  "difficulty": 7,
+  "xpReward": 200,
+  "starterCode": "// Create an async method that returns \"Hello from the Abyss!\"\n\nstring message = await GetMessageAsync();",
+  "solution": "async Task<string> GetMessageAsync() { return await Task.FromResult(\"Hello from the Abyss!\"); }",
+  "testCases": [
+    {
+      "description": "message should equal \"Hello from the Abyss!\"",
+      "assertion": "message == \"Hello from the Abyss!\""
+    }
+  ],
+  "hints": [
+    "Async methods use 'async' keyword and return Task or Task<T>",
+    "Task.FromResult creates a completed task with a value",
+    "async Task<string> GetMessageAsync() { return await Task.FromResult(\"...\"); }"
+  ],
+  "concepts": ["async", "await", "Task"],
+  "readingMaterial": [
+    {
+      "title": "Async/Await",
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/",
+      "description": "Introduction to asynchronous programming"
+    },
+    {
+      "title": "Task Class",
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task",
+      "description": "Understanding the Task class"
+    }
+  ],
+  "tutorial": {
+    "title": "Async/Await: Non-Blocking Magic",
+    "steps": [
+      {
+        "explanation": "In the real world, some operations take TIME:\n- Downloading a file\n- Querying a database\n- Calling a web API\n\nNormally, your program would FREEZE while waiting. Async lets your program keep working!",
+        "tip": "Think of async like ordering food at a restaurant - you don't stand frozen until it arrives!"
+      },
+      {
+        "explanation": "The two magic keywords:\n\n- async: Marks a method as asynchronous\n- await: Pauses HERE until the operation completes (without blocking)\n\nThey always work together!",
+        "codeExample": "async Task DoSomethingAsync()\n{\n    await SomeLongOperation();  // Wait here, but don't block!\n}",
+        "tip": "A method with 'await' inside MUST be marked 'async'. They're a pair!"
+      },
+      {
+        "explanation": "Async methods return TASK instead of the value directly:\n\n- void → Task (no return value)\n- string → Task<string>\n- int → Task<int>\n\nTask represents 'work in progress'.",
+        "codeExample": "// Regular method:\nstring GetMessage() { return \"Hello\"; }\n\n// Async method:\nasync Task<string> GetMessageAsync() { return \"Hello\"; }",
+        "tip": "By convention, async methods end with 'Async' suffix."
+      },
+      {
+        "explanation": "Task.FromResult creates a COMPLETED task with a value. It's useful for:\n- Testing async code\n- Returning immediate values from async methods\n- Implementing interfaces that require Task",
+        "codeExample": "async Task<string> GetMessageAsync()\n{\n    return await Task.FromResult(\"Hello!\");\n}",
+        "tip": "Task.FromResult is like saying 'here's the answer, already done!'."
+      },
+      {
+        "explanation": "To CALL an async method, use await:\n\nstring result = await GetMessageAsync();\n\nThe await 'unwraps' the Task<string> to get the string.",
+        "codeExample": "async Task<string> GetMessageAsync()\n{\n    return await Task.FromResult(\"Hello from the Abyss!\");\n}\n\n// Calling it:\nstring message = await GetMessageAsync();",
+        "tip": "await Task<string> gives you string. await Task<int> gives you int."
+      }
+    ]
+  },
+  "exploration": {
+    "introduction": "Async/await lets your program do other things while waiting for slow operations. Let's explore!",
+    "examples": [
+      {
+        "title": "Your First Async Method",
+        "explanation": "Here's the simplest async method. It returns a Task<string> that completes immediately with our message.\n\nThe 'await' unwraps the Task to get the actual string.",
+        "code": "async Task<string> GetGreetingAsync()\n{\n    return await Task.FromResult(\"Hello, async world!\");\n}\n\nstring greeting = await GetGreetingAsync();\nConsole.WriteLine(greeting);",
+        "expectedOutput": "Hello, async world!"
+      },
+      {
+        "title": "Simulating a Delay",
+        "explanation": "Task.Delay pauses without blocking. This simulates a slow operation.\n\nNotice the program doesn't freeze - it just waits asynchronously.",
+        "code": "async Task<string> GetSlowMessageAsync()\n{\n    Console.WriteLine(\"Starting slow operation...\");\n    await Task.Delay(100);  // Wait 100ms\n    Console.WriteLine(\"Done waiting!\");\n    return \"Message received!\";\n}\n\nstring result = await GetSlowMessageAsync();\nConsole.WriteLine(result);",
+        "expectedOutput": "Starting slow operation...\nDone waiting!\nMessage received!"
+      },
+      {
+        "title": "Multiple Async Calls",
+        "explanation": "You can await multiple operations in sequence. Each await waits for that operation to complete before continuing.",
+        "code": "async Task<int> GetNumberAsync(int n)\n{\n    await Task.Delay(10);\n    return n * 2;\n}\n\nint a = await GetNumberAsync(5);\nint b = await GetNumberAsync(10);\nint c = await GetNumberAsync(15);\n\nConsole.WriteLine(\"Results: \" + a + \", \" + b + \", \" + c);",
+        "expectedOutput": "Results: 10, 20, 30"
+      },
+      {
+        "title": "Your Turn!",
+        "explanation": "Create an async method GetMessageAsync that returns \"Hello from the Abyss!\"\n\nUse Task.FromResult to create the completed task.",
+        "code": "// Define your GetMessageAsync method here\n\nstring message = await GetMessageAsync();\nConsole.WriteLine(message);",
+        "expectedOutput": "Hello from the Abyss!"
+      }
+    ]
+  }
+}

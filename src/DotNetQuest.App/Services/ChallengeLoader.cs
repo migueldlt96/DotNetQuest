@@ -40,6 +40,12 @@ public class ChallengeLoader
         "challenges/castle-of-classes/class-003.json",
         "challenges/castle-of-classes/class-004.json",
         "challenges/castle-of-classes/class-005.json",
+        // The Async Abyss
+        "challenges/async-abyss/async-001.json",
+        "challenges/async-abyss/async-002.json",
+        "challenges/async-abyss/async-003.json",
+        "challenges/async-abyss/async-004.json",
+        "challenges/async-abyss/async-005.json",
     };
 
     public ChallengeLoader(ChallengeService challengeService)
